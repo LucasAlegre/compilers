@@ -5,6 +5,6 @@ main.o: main.c
 lex.yy.o: lex.yy.c
 	gcc -c lex.yy.c
 lex.yy.c: scanner.l
-	flex --header-file=lex.yy.h scanner.l 
+	flex --header-file=lex.yy.h scanner.l
 clean:
-	rm *.o lex.yy.c etapa1
+	rm -f *.o lex.yy.c lex.yy.h etapa1
