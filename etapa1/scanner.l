@@ -15,7 +15,7 @@
 
 %%
 
-byte			            {return KW_BYTE;      }
+KW_BYTE						{return KW_BYTE;      }
 int                         {return KW_INT;       }
 float                       {return KW_FLOAT;     }
 if                          {return KW_IF;        }
@@ -35,7 +35,7 @@ not                         {return OPERATOR_NOT; }
 "=="                        {return OPERATOR_EQ;  }
 "!="                        {return OPERATOR_DIF; }
 [0-9a-z_]+                  {hashInsert(TK_IDENTIFIER, yytext); return TK_IDENTIFIER;}
-[A-IO]+				        {hashInsert(LIT_INTEGER, yytext); return LIT_INTEGER;  }
+[A-IO]+						{hashInsert(LIT_INTEGER, yytext); return LIT_INTEGER;  }
 [A-IO]+\.[A-IO]+            {hashInsert(LIT_FLOAT, yytext); return LIT_FLOAT;    }
 \n                          {LineNumber++;        }
 [ \t]

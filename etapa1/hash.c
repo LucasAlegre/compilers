@@ -10,8 +10,7 @@
 #include <string.h>
 
 void hashInit(void){
-    int i;
-    for(i = 0; i < HASH_SIZE; i++){
+    for(int i = 0; i < HASH_SIZE; i++){
         Table[i] = 0;
     }
 }
@@ -45,17 +44,15 @@ hash_node* hashFind(char *text){
 
 int hashAddress(char *text){
     int address = 1;
-    int i;
-    for(i = 0; i < strlen(text); i++){
+    for(int i = 0; i < strlen(text); i++){
         address = (address * text[i]) % HASH_SIZE + 1;
     }
     return address - 1;
 }
 
 void hashPrint(void){
-    int i;
     hash_node* node;
-    for(i = 0; i < HASH_SIZE; i++){
+    for(int i = 0; i < HASH_SIZE; i++){
         if(Table[i] != NULL){
             for(node = Table[i]; node != NULL; node = node->next){
                 printf("Table[%d] - type: %d text: %s\n", i, node->type, node->text);
