@@ -1,0 +1,9 @@
+int abc__123 = OA;
+float 123 = OA.ABC;
+
+if(abc__123 == OA)
+{
+	print("HE SAID \"AAAAAAAAAA!!\"\n");
+}
+
+return 'a';

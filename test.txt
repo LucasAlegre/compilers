@@ -1,0 +1,9 @@
+int __abc__ = AO;
+float = A.OABC;
+
+loop (__abc__ == AO) {
+    print("abcsde\"aaaaaaaa\"\n");
+    __abc__ = __abc__ + B;
+}
+
+return 'a';
