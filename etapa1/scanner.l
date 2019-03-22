@@ -1,6 +1,11 @@
-
 %{
+/* 
+	ETAPA 1 - Compiladores - 2019/1 Turma A - Prof. Marcelo Johann
+	Alunos:
+		Guilherme Haetinger e Lucas Alegre 
+*/
 	#include "tokens.h"
+	#include "hash.h"
 
 	int Running = 1;
 	int LineNumber = 1;
@@ -29,15 +34,15 @@ not                         {return OPERATOR_NOT; }
 "<="                        {return OPERATOR_LE;  }
 "=="                        {return OPERATOR_EQ;  }
 "!="                        {return OPERATOR_DIF; }
-[0-9a-z_]+                  {return TK_IDENTIFIER;}
-[A-IO]+				        {return LIT_INTEGER;  }
-[A-IO]+\.[A-IO]+            {return LIT_FLOAT;    }
+[0-9a-z_]+                  {hashInsert(TK_IDENTIFIER, yytext); return TK_IDENTIFIER;}
+[A-IO]+				        {hashInsert(LIT_INTEGER, yytext); return LIT_INTEGER;  }
+[A-IO]+\.[A-IO]+            {hashInsert(LIT_FLOAT, yytext); return LIT_FLOAT;    }
 \n                          {LineNumber++;        }
 [ \t]
 ZZ.*
 XXX                         {BEGIN(COMMENT);}
-'.'                         {return LIT_CHAR;     }
-\"(\\.|[^"])*\"             {return LIT_STRING;   }
+'.'                         {hashInsert(LIT_CHAR, yytext); return LIT_CHAR;     }
+\"(\\.|[^"])*\"             {hashInsert(LIT_STRING, yytext); return LIT_STRING;   }
 .                           {return TOKEN_ERROR;  }
 
 <COMMENT>XXX                {BEGIN(INITIAL);}
@@ -45,6 +50,18 @@ XXX                         {BEGIN(COMMENT);}
 <COMMENT>\n                 {++LineNumber;}
 
 %%
+
+void initMe(void){
+	hashInit();
+}
+
+int getLineNumber(void){
+	return LineNumber;
+}
+
+int isRunning(void){
+	return Running;
+}
 
 int yywrap(){
     Running = 0;

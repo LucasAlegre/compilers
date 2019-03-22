@@ -1,94 +1,63 @@
+/* 
+	ETAPA 1 - Compiladores - 2019/1 Turma A - Prof. Marcelo Johann
+	Alunos:
+		Guilherme Haetinger e Lucas Alegre 
+*/
+
 #include <stdio.h>
 #include "lex.yy.h"
 #include "tokens.h"
+#include "hash.h"
+
+int yylex();
+extern char *yytext;
+extern FILE *yyin;
+
+int getLineNumber();
+int isRunning(void);
+void initMe(void);
+
 
 int main()
 {
 	int tok;
 
-	while(1)
-	{
+	initMe();
+	while(isRunning()){
 		tok = yylex();
+		if (!isRunning())
+      		break;
 
-		switch(tok)
-		{
-			case KW_BYTE:
-				printf("KW_BYTE\n");
-				break;
-			case KW_INT:
-				printf("KW_INT\n");
-				break;
-   			case KW_FLOAT:
-   				printf("KW_FLOAT\n");
-   				break;
-   			case KW_IF:
-   				printf("KW_IF\n");
-   				break;
-   			case KW_THEN:
-   				printf("KW_THEN\n");
-   				break;
-   			case KW_ELSE:
-   				printf("KW_ELSE\n");
-   				break;
-   			case KW_LOOP:
-   				printf("KW_LOOP\n");
-   				break;
-   			case KW_LEAP:
-   				printf("KW_LEAP\n");
-   				break;
-   			case KW_READ:
-   				printf("KW_READ\n");
-   				break;
-   			case KW_RETURN:
-   				printf("KW_RETURN\n");
-   				break;
-   			case KW_PRINT:
-   				printf("KW_PRINT\n");
-   				break;
-   			case OPERATOR_LE:
-   				printf("OPERATOR_LE\n");
-   				break;
-   			case OPERATOR_GE:
-   				printf("OPERATOR_GE\n");
-   				break;
-   			case OPERATOR_EQ:
-   				printf("OPERATOR_EQ\n");
-   				break;
-   			case OPERATOR_DIF:
-   				printf("OPERATOR_DIF\n");
-   				break;
-   			case OPERATOR_OR:
-   				printf("OPERATOR_OR\n");
-   				break;
-   			case OPERATOR_AND:
-   				printf("OPERATOR_AND\n");
-   				break;
-   			case OPERATOR_NOT:
-   				printf("OPERATOR_NOT\n");
-   				break;
-   			case TK_IDENTIFIER:
-   				printf("TK_IDENTIFIER\n");
-   				break;
-   			case LIT_INTEGER:
-   				printf("LIT_INTEGER\n");
-   				break;
-   			case LIT_FLOAT:
-   				printf("LIT_FLOAT\n");
-   				break;
-   			case LIT_CHAR:
-   				printf("LIT_CHAR\n");
-   				break;
-   			case LIT_STRING:
-   				printf("LIT_STRING\n");
-   				break;
-   			case TOKEN_ERROR:
-   				printf("TOKEN_ERROR\n");
-   				break;
-			default:
-				printf("DEFAULT\n");
-				break;
+		switch(tok){
+			case KW_BYTE: fprintf(stderr, "KW_BYTE na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+			case KW_INT:  fprintf(stderr, "KW_INT na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case KW_FLOAT:fprintf(stderr, "KW_FLOAT na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case KW_IF:   fprintf(stderr, "KW_IF na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case KW_THEN: fprintf(stderr, "KW_THEN na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case KW_ELSE: fprintf(stderr, "KW_ELSE na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case KW_LOOP: fprintf(stderr, "KW_LOOP na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case KW_LEAP: fprintf(stderr, "KW_LEAP na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case KW_READ: fprintf(stderr, "KW_READ na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case KW_RETURN: fprintf(stderr, "KW_RETURN na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case KW_PRINT: fprintf(stderr, "KW_PRINT na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case OPERATOR_LE: fprintf(stderr, "OPERATOR_LE na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case OPERATOR_GE: fprintf(stderr, "OPERATOR_GE na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case OPERATOR_EQ: fprintf(stderr, "OPERATOR_EQ na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case OPERATOR_DIF: fprintf(stderr, "OPERATOR_DIF na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case OPERATOR_OR:  fprintf(stderr, "OPERATOR_OR na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case OPERATOR_AND: fprintf(stderr, "OPERATOR_AND na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case OPERATOR_NOT: fprintf(stderr, "OPERATOR_NOT na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case TK_IDENTIFIER: fprintf(stderr, "TK_IDENTIFIER na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case LIT_INTEGER: fprintf(stderr, "LIT_INTEGER na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case LIT_FLOAT: fprintf(stderr, "LIT_FLOAT na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case LIT_STRING: fprintf(stderr, "LIT_STRING na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+			case LIT_CHAR: fprintf(stderr, "LIT_CHAR na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+   			case TOKEN_ERROR: fprintf(stderr, "TOKEN_ERROR na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+			default: fprintf(stderr, "Caracter especial na linha %d. - tok: %d \n", getLineNumber(), tok); break;
 		}
 	}
+
+	hashPrint();
 
 	return 0;
 }
