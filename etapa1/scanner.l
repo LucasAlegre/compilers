@@ -15,7 +15,7 @@
 
 %%
 
-KW_BYTE						{return KW_BYTE;      }
+byte						{return KW_BYTE;      }
 int                         {return KW_INT;       }
 float                       {return KW_FLOAT;     }
 if                          {return KW_IF;        }
