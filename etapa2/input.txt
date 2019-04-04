@@ -5,23 +5,48 @@ XXX
 
 XXX
 
-ZZ comentario de uma "" linha
+ZZ UFRGS - Compiladores - Marcelo Johann - 2019/1
 
-byte b = A;
-int abc__123 = OA;
-float 123 = OA.ABC;
+byte a = O;
+byte 1 = O;
+int v [IO]: O O O O O O O O O O; 
+int mat [IO]; 
+float f = IO.EE;
+byte c = 'x';
+byte x = DE;
 
-if(abc__123 == OA) then
-	print("HE SAID \"AAAAAAAAAA!!\"\n");
-else
-	print("\"AAAA!!\" - he said");
+byte main ()
+  {
+  a = C;
+  v[a] = AO;
+  print v[a];
 
-loop(123 <= AAA or (123 >= ABB and 123 != O) or not(23 == ABC))
-{
-	read("what did he say? \n", &b);
-	leap(ID);
-}
+  print "Digite um numero: \n";
+  read a;
+  loop (1<IO)
+    {
+    1 = incn(1,I);
+    a = incn(a,I);
+    };
 
-%@ ZZ dois erros aqui
+  print "Incrementado algumas vezes fica ",a,"\n";
 
-return 'a';
+  if (a==E) then 
+    print "Parou no meio\n";
+
+  if ( a==II or a== IC ) then
+    print "Var a ficou II ou IC\n";
+
+  if (a==IO) then else
+    ;
+  ;;;
+  {;};
+  {};
+  };
+
+byte incn ( byte x, byte n )
+  {
+  return x+n
+  };
+
+

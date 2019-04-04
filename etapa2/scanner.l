@@ -11,7 +11,7 @@
 	int yyparse(); 
     
 	int LineNumber = 1;
-    int Running = 1;  
+        int Running = 1;  
    	
 %}
 
@@ -19,7 +19,7 @@
 
 %%
 
-byte						{return KW_BYTE;      }
+byte			    {return KW_BYTE;      }
 int                         {return KW_INT;       }
 float                       {return KW_FLOAT;     }
 if                          {return KW_IF;        }
@@ -39,7 +39,7 @@ not                         {return OPERATOR_NOT; }
 "=="                        {return OPERATOR_EQ;  }
 "!="                        {return OPERATOR_DIF; }
 [0-9a-z_]+                  {hashInsert(TK_IDENTIFIER, yytext); return TK_IDENTIFIER;}
-[A-IO]+						{hashInsert(LIT_INTEGER, yytext); return LIT_INTEGER;  }
+[A-IO]+		            {hashInsert(LIT_INTEGER, yytext); return LIT_INTEGER;  }
 [A-IO]+\.[A-IO]+            {hashInsert(LIT_FLOAT, yytext); return LIT_FLOAT;    }
 \n                          {LineNumber++;        }
 [ \t]
@@ -57,6 +57,11 @@ XXX                         {BEGIN(COMMENT);}
 
 void initMe(void){
 	hashInit();
+}
+
+FILE* file(char* filename){
+    yyin = fopen(filename,"r");
+    return yyin;
 }
 
 int getLineNumber(void){
