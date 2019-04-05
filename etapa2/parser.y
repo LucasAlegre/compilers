@@ -103,13 +103,13 @@ l_cmd_end :
 
 cmd :
     | bloco
-    | TK_IDENTIFIER '=' expression
-    | TK_IDENTIFIER '[' expression ']' '=' expression
+    | TK_IDENTIFIER '=' exp
+    | TK_IDENTIFIER '[' exp ']' '=' exp
     | KW_READ TK_IDENTIFIER
     | KW_PRINT l_print
-    | KW_RETURN expression
-    | KW_IF '(' expression ')' KW_THEN cmd else
-    | KW_LOOP '(' expression ')' cmd
+    | KW_RETURN exp
+    | KW_IF '(' exp ')' KW_THEN cmd else
+    | KW_LOOP '(' exp ')' cmd
     | KW_LEAP
     ;
 
@@ -117,32 +117,32 @@ else :
      | KW_ELSE cmd
      ;
 
-expression : TK_IDENTIFIER
-           | TK_IDENTIFIER '[' expression ']'
+exp : TK_IDENTIFIER
+           | TK_IDENTIFIER '[' exp ']'
            | TK_IDENTIFIER '(' l_args ')'
            | literal
-           | expression '+' expression
-           | expression '-' expression
-           | expression '*' expression
-           | expression '/' expression
-           | expression '<' expression
-					 | expression '>' expression
-					 | expression OPERATOR_EQ expression  
-           | expression OPERATOR_GE expression
-           | expression OPERATOR_LE expression
-					 | expression OPERATOR_DIF expression
-           | expression OPERATOR_AND expression
-           | expression OPERATOR_OR expression   
-					 | OPERATOR_NOT expression
-					 | '(' expression ')' 
+           | exp '+' exp
+           | exp '-' exp
+           | exp '*' exp
+           | exp '/' exp
+           | exp '<' exp
+					 | exp '>' exp
+					 | exp OPERATOR_EQ exp  
+           | exp OPERATOR_GE exp
+           | exp OPERATOR_LE exp
+					 | exp OPERATOR_DIF exp
+           | exp OPERATOR_AND exp
+           | exp OPERATOR_OR exp   
+					 | OPERATOR_NOT exp
+					 | '(' exp ')' 
 	         ;
 
 l_args : 
-       | expression l_args_end
+       | exp l_args_end
        ;
 
 l_args_end :
-           | ',' expression l_args_end
+           | ',' exp l_args_end
            ;
 
 l_print : 
@@ -154,7 +154,7 @@ l_print_end :
             ;
 
 element_print : LIT_STRING
-              | expression
+              | exp
               ; 
 
 %%

@@ -4,6 +4,13 @@
 	Alunos:
 		Guilherme Haetinger e Lucas Alegre 
 */
+
+	#define SYMBOL_LIT_INTEGER 1
+	#define SYMBOL_LIT_FLOAT 2
+	#define SYMBOL_LIT_CHAR 3
+	#define SYMBOL_LIT_STRING 4
+	#define SYMBOL_IDENTIFIER 7
+
 	#include <stdio.h>
 	#include "y.tab.h"
 	#include "hash.h"
@@ -11,7 +18,7 @@
 	int yyparse(); 
     
 	int LineNumber = 1;
-        int Running = 1;  
+    int Running = 1;  
    	
 %}
 
@@ -19,7 +26,7 @@
 
 %%
 
-byte			    {return KW_BYTE;      }
+byte			    		{return KW_BYTE;      }
 int                         {return KW_INT;       }
 float                       {return KW_FLOAT;     }
 if                          {return KW_IF;        }
@@ -39,7 +46,7 @@ not                         {return OPERATOR_NOT; }
 "=="                        {return OPERATOR_EQ;  }
 "!="                        {return OPERATOR_DIF; }
 [0-9a-z_]+                  {hashInsert(TK_IDENTIFIER, yytext); return TK_IDENTIFIER;}
-[A-IO]+		            {hashInsert(LIT_INTEGER, yytext); return LIT_INTEGER;  }
+[A-IO]+		            	{hashInsert(LIT_INTEGER, yytext); return LIT_INTEGER;  }
 [A-IO]+\.[A-IO]+            {hashInsert(LIT_FLOAT, yytext); return LIT_FLOAT;    }
 \n                          {LineNumber++;        }
 [ \t]

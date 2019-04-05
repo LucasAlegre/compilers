@@ -1,5 +1,5 @@
 XXX
-	ETAPA 1 - Compiladores - 2019/1 Turma A - Prof. Marcelo Johann
+	ETAPA 2 - Compiladores - 2019/1 Turma A - Prof. Marcelo Johann
 	Alunos:
 		Guilherme Haetinger e Lucas Alegre 
 
@@ -27,6 +27,7 @@ byte main ()
     {
     1 = incn(1,I);
     a = incn(a,I);
+    if (not a) then leap;
     };
 
   print "Incrementado algumas vezes fica ",a,"\n";

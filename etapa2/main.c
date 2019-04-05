@@ -17,25 +17,24 @@ extern void hashPrint();
 
 int main(int argc, char *argv[]){
 
-  int token;
+    int token;
+	
 	if(argc < 2){
-		fprintf(stderr,"Execute: ./etapa2 nomearquivo.\n");
+		fprintf(stderr,"Call: ./etapa2 nomearquivo\n");
 		return 1;
 	}
 	if(!(file(argv[1]))){
-		fprintf(stderr,"Nao eh possivel abrir o arquivo %s.\n",argv[1]);
+		fprintf(stderr,"Cannot open file %s\n",argv[1]);
 		return 2;
 	}
 	
 	initMe();
 	
-	while(isRunning()){
-		yyparse();
-	}	
+	yyparse();
 	
 	hashPrint();
 
-	fprintf(stderr,"Compiled Successfully\n");
+	fprintf(stderr, "Compiled Successfully\n");
 
   return 0; 
 }
