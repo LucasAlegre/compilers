@@ -1,0 +1,17 @@
+ZZ ERROR ON LINE 3
+int a = O;
+float b = C.O;
+
+byte main()
+{
+	a = C;
+	ZZ ERROR ON LINE 11
+	print "NO SEMICOLON HERE!"
+
+	loop (a > b)
+	{
+		ZZ ERROR ON LINE 15
+		count = count + A
+		a = O;
+	}
+}
