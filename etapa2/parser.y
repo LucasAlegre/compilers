@@ -39,8 +39,8 @@
 %token LIT_STRING    
 %token TOKEN_ERROR
 
-%left '<' '>'
-%left OPERATOR_LE OPERATOR_GE OPERATOR_EQ OPERATOR_DIF OPERATOR_OR OPERATOR_AND OPERATOR_NOT
+%left OPERATOR_OR OPERATOR_AND OPERATOR_NOT
+%left '<' '>' OPERATOR_LE OPERATOR_GE OPERATOR_EQ OPERATOR_DIF
 %left '+' '-'
 %left '*' '/'
 
@@ -50,16 +50,16 @@
 %%
 
 program : l_declarations
-    		;
+    	;
 
 l_declarations : declaration l_declarations            
-							 |
-							 ;
+               |
+               ;
 
 declaration : tipo TK_IDENTIFIER '=' literal ';'
-						| tipo TK_IDENTIFIER '[' LIT_INTEGER ']' init_vector ';'
-						| tipo TK_IDENTIFIER '(' l_param ')' bloco ';'
-						;
+            | tipo TK_IDENTIFIER '[' LIT_INTEGER ']' init_vector ';'
+            | tipo TK_IDENTIFIER '(' l_param ')' bloco ';'
+            ;
 
 tipo : KW_BYTE
      | KW_INT
@@ -118,24 +118,24 @@ else :
      ;
 
 exp : TK_IDENTIFIER
-           | TK_IDENTIFIER '[' exp ']'
-           | TK_IDENTIFIER '(' l_args ')'
-           | literal
-           | exp '+' exp
-           | exp '-' exp
-           | exp '*' exp
-           | exp '/' exp
-           | exp '<' exp
-					 | exp '>' exp
-					 | exp OPERATOR_EQ exp  
-           | exp OPERATOR_GE exp
-           | exp OPERATOR_LE exp
-					 | exp OPERATOR_DIF exp
-           | exp OPERATOR_AND exp
-           | exp OPERATOR_OR exp   
-					 | OPERATOR_NOT exp
-					 | '(' exp ')' 
-	         ;
+    | TK_IDENTIFIER '[' exp ']'
+    | TK_IDENTIFIER '(' l_args ')'
+    | literal
+    | exp '+' exp
+    | exp '-' exp
+    | exp '*' exp
+    | exp '/' exp
+    | exp '<' exp
+    | exp '>' exp
+    | exp OPERATOR_EQ exp  
+    | exp OPERATOR_GE exp
+    | exp OPERATOR_LE exp
+    | exp OPERATOR_DIF exp
+    | exp OPERATOR_AND exp
+    | exp OPERATOR_OR exp   
+    | OPERATOR_NOT exp
+    | '(' exp ')' 
+    ;
 
 l_args : 
        | exp l_args_end
@@ -145,8 +145,7 @@ l_args_end :
            | ',' exp l_args_end
            ;
 
-l_print : 
-        | element_print l_print_end
+l_print : element_print l_print_end
         ;
  
 l_print_end :
