@@ -1,5 +1,5 @@
 %{
-/*	ETAPA 2 - Compiladores - 2019/1 Turma A - Prof. Marcelo Johann
+/*	ETAPA 3 - Compiladores - 2019/1 Turma A - Prof. Marcelo Johann
 	Alunos:
 		Guilherme Haetinger e Lucas Alegre 
 */
@@ -7,12 +7,20 @@
 	#include <stdlib.h>
 	#include <string.h>
 	#include "hash.h"
+  #include "astree.h"
 	
 	int yylex();
 	int yyerror(char *message);
 	extern int getLineNumber();
 
+  astree_node *root;
+
 %}
+
+%union{
+	hash_node *symbol;
+	astree_node *astree;
+}
 
 %token KW_BYTE     
 %token KW_INT        
@@ -24,7 +32,8 @@
 %token KW_LEAP       
 %token KW_READ       
 %token KW_RETURN     
-%token KW_PRINT      
+%token KW_PRINT  
+
 %token OPERATOR_LE   
 %token OPERATOR_GE   
 %token OPERATOR_EQ   
@@ -32,11 +41,13 @@
 %token OPERATOR_OR   
 %token OPERATOR_AND  
 %token OPERATOR_NOT  
-%token TK_IDENTIFIER 
-%token LIT_INTEGER   
-%token LIT_FLOAT     
-%token LIT_CHAR      
-%token LIT_STRING    
+
+%token <symbol> TK_IDENTIFIER 
+%token <symbol> LIT_INTEGER   
+%token <symbol> LIT_FLOAT     
+%token <symbol> LIT_CHAR      
+%token <symbol> LIT_STRING    
+
 %token TOKEN_ERROR
 
 %left OPERATOR_OR OPERATOR_AND OPERATOR_NOT
@@ -44,6 +55,27 @@
 %left '+' '-'
 %left '*' '/'
 
+%type <astree> program
+%type <astree> l_declarations
+%type <astree> declaration
+%type <astree> tipo
+%type <astree> literal
+%type <astree> init_vector
+%type <astree> vector_elements
+%type <astree> l_param
+%type <astree> param_end
+%type <astree> param
+%type <astree> bloco
+%type <astree> l_cmd
+%type <astree> l_cmd_end
+%type <astree> cmd
+%type <astree> else
+%type <astree> exp
+%type <astree> l_args
+%type <astree> l_args_end
+%type <astree> l_print
+%type <astree> l_print_end
+%type <astree> element_print
 
 %start program
 
