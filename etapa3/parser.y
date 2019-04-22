@@ -80,108 +80,106 @@
 
 %%
 
-program : l_declarations                                                  {root=$$;astreePrint(0, root);}
+program : l_declarations                                                  {root=$$;astree_print(0, root);}
     		;
 
-l_declarations : declaration l_declarations                               {$$=astreeCreate(AST_LDEC, 0, $1, $2, 0, 0);}
+l_declarations : declaration l_declarations                               {$$=astree_create(AST_LDEC, 0, $1, $2, 0, 0);}
 							 | 																													{$$=0;}
                ;
 
-declaration : tipo TK_IDENTIFIER '=' literal ';'													{$$=astreeCreate(AST_DECVAR, $2, $1, $4, 0, 0);}
-            | tipo TK_IDENTIFIER '[' LIT_INTEGER ']' init_vector ';'			{$$=astreeCreate(AST_DECVEC, $2, $1,
-																																								astreeCreate(AST_SYMBOL, $4, 0, 0, 0, 0),
-																																								$6, 0);}
-            | tipo TK_IDENTIFIER '(' l_param ')' bloco ';'								{$$=astreeCreate(AST_DECFUNC, $2, $1, $4, $6, 0);}
+declaration : tipo TK_IDENTIFIER '=' literal ';'													{$$=astree_create(AST_DECVAR, $2, $1, $4, 0, 0);}
+            | tipo TK_IDENTIFIER '[' LIT_INTEGER ']' init_vector ';'			{$$=astree_create(AST_DECVEC, $2, $1, astree_create(AST_SYMBOL, $4, 0, 0, 0, 0), $6, 0);}
+            | tipo TK_IDENTIFIER '(' l_param ')' bloco ';'								{$$=astree_create(AST_DECFUNC, $2, $1, $4, $6, 0);}
             ;
 
-tipo : KW_BYTE																														{$$=astreeCreate(AST_TPBYTE, 0, 0, 0, 0, 0);}
-     | KW_INT																															{$$=astreeCreate(AST_TPINT, 0, 0, 0, 0, 0);}
-     | KW_FLOAT																														{$$=astreeCreate(AST_TPFLOAT, 0, 0, 0, 0, 0);}
+tipo : KW_BYTE																														{$$=astree_create(AST_TPBYTE, 0, 0, 0, 0, 0);}
+     | KW_INT																															{$$=astree_create(AST_TPINT, 0, 0, 0, 0, 0);}
+     | KW_FLOAT																														{$$=astree_create(AST_TPFLOAT, 0, 0, 0, 0, 0);}
      ;
 
-literal : LIT_INTEGER																											{$$=astreeCreate(AST_SYMBOL, $1, 0, 0, 0, 0);}
-        | LIT_FLOAT																												{$$=astreeCreate(AST_SYMBOL, $1, 0, 0, 0, 0);}
-        | LIT_CHAR																												{$$=astreeCreate(AST_SYMBOL, $1, 0, 0, 0, 0);}
+literal : LIT_INTEGER																											{$$=astree_create(AST_SYMBOL, $1, 0, 0, 0, 0);}
+        | LIT_FLOAT																												{$$=astree_create(AST_SYMBOL, $1, 0, 0, 0, 0);}
+        | LIT_CHAR																												{$$=astree_create(AST_SYMBOL, $1, 0, 0, 0, 0);}
         ;
 
 init_vector :																															{$$=0;}
-            | ':' literal vector_elements																	{$$=astreeCreate(AST_VECINIT, 0, $2, $3, 0, 0);}
+            | ':' literal vector_elements																	{$$=astree_create(AST_VECINIT, 0, $2, $3, 0, 0);}
             ;
 
 vector_elements :																													{$$=0;}
-                | literal vector_elements																	{$$=astreeCreate(AST_VECELEMENTS, 0, $1, $2, 0, 0);}
+                | literal vector_elements																	{$$=astree_create(AST_VECELEMENTS, 0, $1, $2, 0, 0);}
                 ;
 
 l_param :																																	{$$=0;}
-        | param param_end																									{$$=astreeCreate(AST_PARAMINIT, 0, $1, $2, 0, 0);}
+        | param param_end																									{$$=astree_create(AST_PARAMINIT, 0, $1, $2, 0, 0);}
         ;
 
 param_end :																																{$$=0;}
-					| ',' param param_end																						{$$=astreeCreate(AST_PARAMLST, 0, $2, $3, 0, 0);}
+					| ',' param param_end																						{$$=astree_create(AST_PARAMLST, 0, $2, $3, 0, 0);}
           ;
 
-param : tipo TK_IDENTIFIER																								{$$=astreeCreate(AST_PARAM, $2, $1, 0, 0, 0);}
+param : tipo TK_IDENTIFIER																								{$$=astree_create(AST_PARAM, $2, $1, 0, 0, 0);}
       ;
 
-bloco : '{' l_cmd '}'																											{$$=astreeCreate(AST_BLOCK, 0, $2, 0, 0, 0);}
+bloco : '{' l_cmd '}'																											{$$=astree_create(AST_BLOCK, 0, $2, 0, 0, 0);}
       ;
 
-l_cmd : cmd l_cmd_end																											{$$=astreeCreate(AST_CMDLSTINIT, 0, $1, $2, 0, 0);}
+l_cmd : cmd l_cmd_end																											{$$=astree_create(AST_CMDLSTINIT, 0, $1, $2, 0, 0);}
 			;
 
 l_cmd_end :																																{$$=0;}
-          | ';' cmd l_cmd_end																							{$$=astreeCreate(AST_CMDLST, 0, $2, $3, 0, 0);}
+          | ';' cmd l_cmd_end																							{$$=astree_create(AST_CMDLST, 0, $2, $3, 0, 0);}
           ;
 
 cmd :																																			{$$=0;}
     | bloco																																{$$=$1;}
-    | TK_IDENTIFIER '=' exp																								{$$=astreeCreate(AST_ATTR, $1, $3, 0, 0, 0);}
-    | TK_IDENTIFIER '[' exp ']' '=' exp																		{$$=astreeCreate(AST_VECATTR, $1, $3, $6, 0, 0);}
-    | KW_READ TK_IDENTIFIER																								{$$=astreeCreate(AST_READ, $2, 0, 0, 0, 0);}
-    | KW_PRINT l_print																										{$$=astreeCreate(AST_PRINT, 0, $2, 0, 0, 0);}
-    | KW_RETURN exp																												{$$=astreeCreate(AST_RETURN, 0, $2, 0, 0, 0);}
-    | KW_IF '(' exp ')' KW_THEN cmd																				{$$=astreeCreate(AST_IF, 0, $3, $6, 0, 0);}
-    | KW_IF '(' exp ')' KW_THEN cmd KW_ELSE cmd														{$$=astreeCreate(AST_IFELSE, 0, $3, $6, $8, 0);}
-    | KW_LOOP '(' exp ')' cmd																							{$$=astreeCreate(AST_LOOP, 0, $3, $5, 0, 0);}
-    | KW_LEAP																															{$$=astreeCreate(AST_LEAP, 0, 0, 0, 0, 0);}
+    | TK_IDENTIFIER '=' exp																								{$$=astree_create(AST_ATTR, $1, $3, 0, 0, 0);}
+    | TK_IDENTIFIER '[' exp ']' '=' exp																		{$$=astree_create(AST_VECATTR, $1, $3, $6, 0, 0);}
+    | KW_READ TK_IDENTIFIER																								{$$=astree_create(AST_READ, $2, 0, 0, 0, 0);}
+    | KW_PRINT l_print																										{$$=astree_create(AST_PRINT, 0, $2, 0, 0, 0);}
+    | KW_RETURN exp																												{$$=astree_create(AST_RETURN, 0, $2, 0, 0, 0);}
+    | KW_IF '(' exp ')' KW_THEN cmd																				{$$=astree_create(AST_IF, 0, $3, $6, 0, 0);}
+    | KW_IF '(' exp ')' KW_THEN cmd KW_ELSE cmd														{$$=astree_create(AST_IFELSE, 0, $3, $6, $8, 0);}
+    | KW_LOOP '(' exp ')' cmd																							{$$=astree_create(AST_LOOP, 0, $3, $5, 0, 0);}
+    | KW_LEAP																															{$$=astree_create(AST_LEAP, 0, 0, 0, 0, 0);}
     ;
 
-exp : TK_IDENTIFIER																												{$$=astreeCreate(AST_SYMBOL, $1, 0, 0, 0, 0);}
-    | TK_IDENTIFIER '[' exp ']'																						{$$=astreeCreate(AST_VEC, $1, $3, 0, 0, 0);}
-    | TK_IDENTIFIER '(' l_args ')'																				{$$=astreeCreate(AST_FUNC, $1, $3, 0, 0, 0);}
+exp : TK_IDENTIFIER																												{$$=astree_create(AST_SYMBOL, $1, 0, 0, 0, 0);}
+    | TK_IDENTIFIER '[' exp ']'																						{$$=astree_create(AST_VEC, $1, $3, 0, 0, 0);}
+    | TK_IDENTIFIER '(' l_args ')'																				{$$=astree_create(AST_FUNC, $1, $3, 0, 0, 0);}
     | literal																															{$$=$1;}
-    | exp '+' exp																													{$$=astreeCreate(AST_SUM, 0, $1, $3, 0, 0);}
-    | exp '-' exp																													{$$=astreeCreate(AST_DEC, 0, $1, $3, 0, 0);}
-    | exp '*' exp																													{$$=astreeCreate(AST_MUL, 0, $1, $3, 0, 0);}
-    | exp '/' exp																													{$$=astreeCreate(AST_DIV, 0, $1, $3, 0, 0);}
-    | exp '<' exp																													{$$=astreeCreate(AST_LESS, 0, $1, $3, 0, 0);}
-    | exp '>' exp																													{$$=astreeCreate(AST_GREAT, 0, $1, $3, 0, 0);}
-    | exp OPERATOR_EQ exp																									{$$=astreeCreate(AST_EQ, 0, $1, $3, 0, 0);}
-    | exp OPERATOR_GE exp																									{$$=astreeCreate(AST_GE, 0, $1, $3, 0, 0);}
-    | exp OPERATOR_LE exp																									{$$=astreeCreate(AST_LE, 0, $1, $3, 0, 0);}
-    | exp OPERATOR_DIF exp																								{$$=astreeCreate(AST_DIF, 0, $1, $3, 0, 0);}
-    | exp OPERATOR_AND exp																								{$$=astreeCreate(AST_AND, 0, $1, $3, 0, 0);}
-    | exp OPERATOR_OR exp																									{$$=astreeCreate(AST_OR, 0, $1, $3, 0, 0);}
-    | OPERATOR_NOT exp																										{$$=astreeCreate(AST_NOT, 0, $2, 0, 0, 0);}
-    | '(' exp ')'																													{$$=astreeCreate(AST_PAREN, 0, $2, 0, 0, 0);}
+    | exp '+' exp																													{$$=astree_create(AST_SUM, 0, $1, $3, 0, 0);}
+    | exp '-' exp																													{$$=astree_create(AST_DEC, 0, $1, $3, 0, 0);}
+    | exp '*' exp																													{$$=astree_create(AST_MUL, 0, $1, $3, 0, 0);}
+    | exp '/' exp																													{$$=astree_create(AST_DIV, 0, $1, $3, 0, 0);}
+    | exp '<' exp																													{$$=astree_create(AST_LESS, 0, $1, $3, 0, 0);}
+    | exp '>' exp																													{$$=astree_create(AST_GREAT, 0, $1, $3, 0, 0);}
+    | exp OPERATOR_EQ exp																									{$$=astree_create(AST_EQ, 0, $1, $3, 0, 0);}
+    | exp OPERATOR_GE exp																									{$$=astree_create(AST_GE, 0, $1, $3, 0, 0);}
+    | exp OPERATOR_LE exp																									{$$=astree_create(AST_LE, 0, $1, $3, 0, 0);}
+    | exp OPERATOR_DIF exp																								{$$=astree_create(AST_DIF, 0, $1, $3, 0, 0);}
+    | exp OPERATOR_AND exp																								{$$=astree_create(AST_AND, 0, $1, $3, 0, 0);}
+    | exp OPERATOR_OR exp																									{$$=astree_create(AST_OR, 0, $1, $3, 0, 0);}
+    | OPERATOR_NOT exp																										{$$=astree_create(AST_NOT, 0, $2, 0, 0, 0);}
+    | '(' exp ')'																													{$$=astree_create(AST_PAREN, 0, $2, 0, 0, 0);}
     ;
 
 l_args :																																	{$$=0;}
-       | exp l_args_end																										{$$=astreeCreate(AST_ARGLSTINIT, 0, $1, $2, 0, 0);}
+       | exp l_args_end																										{$$=astree_create(AST_ARGLSTINIT, 0, $1, $2, 0, 0);}
        ;
 
 l_args_end :																															{$$=0;}
-           | ',' exp l_args_end																						{$$=astreeCreate(AST_ARGLST, 0, $2, $3, 0, 0);}
+           | ',' exp l_args_end																						{$$=astree_create(AST_ARGLST, 0, $2, $3, 0, 0);}
            ;
 
-l_print : element_print l_print_end																				{$$=astreeCreate(AST_PRINTLSTINIT, 0, $1, $2, 0, 0);}
+l_print : element_print l_print_end																				{$$=astree_create(AST_PRINTLSTINIT, 0, $1, $2, 0, 0);}
 				;
 
 l_print_end :																															{$$=0;}
-	          | ',' element_print l_print_end																{$$=astreeCreate(AST_PRINTLST, 0, $2, $3, 0, 0);}
+	          | ',' element_print l_print_end																{$$=astree_create(AST_PRINTLST, 0, $2, $3, 0, 0);}
             ;
 
-element_print : LIT_STRING																								{$$=astreeCreate(AST_SYMBOL, $1, 0, 0, 0, 0);}
+element_print : LIT_STRING																								{$$=astree_create(AST_SYMBOL, $1, 0, 0, 0, 0);}
               | exp																												{$$=$1;}
               ;
 
@@ -193,6 +191,6 @@ int yyerror(char *err){
 	exit(3);
 }
 
-astree_node * getAST(){
+astree_node* getAST(){
 	return root;
 }

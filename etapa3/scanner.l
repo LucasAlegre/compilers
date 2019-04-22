@@ -47,7 +47,7 @@ not                         {return OPERATOR_NOT; }
 "=="                        {return OPERATOR_EQ;  }
 "!="                        {return OPERATOR_DIF; }
 [0-9a-z_]+                  {yylval.symbol = hashInsert(TK_IDENTIFIER, yytext); return TK_IDENTIFIER;}
-[A-IO]+		            			{yylval.symbol = hashInsert(LIT_INTEGER, yytext); return LIT_INTEGER;  }
+[A-IO]+		            	{yylval.symbol = hashInsert(LIT_INTEGER, yytext); return LIT_INTEGER;  }
 [A-IO]+\.[A-IO]+            {yylval.symbol = hashInsert(LIT_FLOAT, yytext); return LIT_FLOAT;    }
 \n                          {LineNumber++;        }
 [ \t]

@@ -60,9 +60,9 @@ typedef struct astree
 } astree_node;
 
 
-astree_node* astreeCreate(int type, hash_node* symbol, astree_node* son0, astree_node* son1, astree_node* son2, astree_node* son3);
+astree_node* astree_create(int type, hash_node* symbol, astree_node* son0, astree_node* son1, astree_node* son2, astree_node* son3);
 
-void astreePrint(int level, astree_node *node);
+void astree_print(int level, astree_node *node);
 
 void uncompileAST(astree_node * root, FILE * file);
 
