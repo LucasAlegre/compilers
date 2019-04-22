@@ -88,7 +88,9 @@ l_declarations : declaration l_declarations                               {$$=as
                ;
 
 declaration : tipo TK_IDENTIFIER '=' literal ';'													{$$=astreeCreate(AST_DECVAR, $2, $1, $4, 0, 0);}
-            | tipo TK_IDENTIFIER '[' LIT_INTEGER ']' init_vector ';'			{$$=astreeCreate(AST_DECVEC, $2, $1, $4, $6, 0);}
+            | tipo TK_IDENTIFIER '[' LIT_INTEGER ']' init_vector ';'			{$$=astreeCreate(AST_DECVEC, $2, $1,
+																																								astreeCreate(AST_SYMBOL, $4, 0, 0, 0, 0),
+																																								$6, 0);}
             | tipo TK_IDENTIFIER '(' l_param ')' bloco ';'								{$$=astreeCreate(AST_DECFUNC, $2, $1, $4, $6, 0);}
             ;
 
@@ -180,7 +182,7 @@ l_print_end :																															{$$=0;}
             ;
 
 element_print : LIT_STRING																								{$$=astreeCreate(AST_SYMBOL, $1, 0, 0, 0, 0);}
-              | exp																												{$$=1;}
+              | exp																												{$$=$1;}
               ;
 
 %%

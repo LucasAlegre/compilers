@@ -1,8 +1,8 @@
 %{
-/* 
+/*
 	ETAPA 1 - Compiladores - 2019/1 Turma A - Prof. Marcelo Johann
 	Alunos:
-		Guilherme Haetinger e Lucas Alegre 
+		Guilherme Haetinger e Lucas Alegre
 */
 
 	#define SYMBOL_LIT_INTEGER 1
@@ -15,12 +15,12 @@
 	#include "hash.h"
 	#include "astree.h"
 	#include "y.tab.h"
-	
-	int yyparse(); 
-    
+
+	int yyparse();
+
 	int LineNumber = 1;
-    int Running = 1;  
-   	
+    int Running = 1;
+
 %}
 
 %x COMMENT
@@ -46,15 +46,15 @@ not                         {return OPERATOR_NOT; }
 "<="                        {return OPERATOR_LE;  }
 "=="                        {return OPERATOR_EQ;  }
 "!="                        {return OPERATOR_DIF; }
-[0-9a-z_]+                  {hashInsert(TK_IDENTIFIER, yytext); return TK_IDENTIFIER;}
-[A-IO]+		            	{hashInsert(LIT_INTEGER, yytext); return LIT_INTEGER;  }
-[A-IO]+\.[A-IO]+            {hashInsert(LIT_FLOAT, yytext); return LIT_FLOAT;    }
+[0-9a-z_]+                  {yylval.symbol = hashInsert(TK_IDENTIFIER, yytext); return TK_IDENTIFIER;}
+[A-IO]+		            			{yylval.symbol = hashInsert(LIT_INTEGER, yytext); return LIT_INTEGER;  }
+[A-IO]+\.[A-IO]+            {yylval.symbol = hashInsert(LIT_FLOAT, yytext); return LIT_FLOAT;    }
 \n                          {LineNumber++;        }
 [ \t]
 ZZ.*
 XXX                         {BEGIN(COMMENT);}
-'.'                         {hashInsert(LIT_CHAR, yytext); return LIT_CHAR;     }
-\"(\\.|[^"])*\"             {hashInsert(LIT_STRING, yytext); return LIT_STRING;   }
+'.'                         {yylval.symbol = hashInsert(LIT_CHAR, yytext); return LIT_CHAR;     }
+\"(\\.|[^"])*\"             {yylval.symbol = hashInsert(LIT_STRING, yytext); return LIT_STRING;   }
 .                           {return TOKEN_ERROR;  }
 
 <COMMENT>XXX                {BEGIN(INITIAL);}
@@ -84,6 +84,3 @@ int yywrap(){
     Running = 0;
     return 1;
 }
-
-
-
