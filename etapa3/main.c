@@ -1,7 +1,7 @@
-/* 
+/*
 	ETAPA 3 - Compiladores - 2019/1 Turma A - Prof. Marcelo Johann
 	Alunos:
-		Guilherme Haetinger e Lucas Alegre 
+		Guilherme Haetinger e Lucas Alegre
 */
 
 #include <stdio.h>
@@ -18,7 +18,7 @@ extern void hashPrint();
 int main(int argc, char *argv[]){
 
     int token;
-	
+
 	if(argc < 2){
 		fprintf(stderr,"Call: ./etapa2 nomearquivo\n");
 		return 1;
@@ -27,14 +27,14 @@ int main(int argc, char *argv[]){
 		fprintf(stderr,"Cannot open file %s\n",argv[1]);
 		return 2;
 	}
-	
+
 	initMe();
-	
+
 	yyparse();
-	
-	hashPrint();
+
+	// hashPrint();
 
 	fprintf(stderr, "Compiled Successfully\n");
 
- return 0; 
+ return 0;
 }
