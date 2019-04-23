@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "astree.h"
 
 extern FILE* yyin;
 extern FILE* file();
@@ -14,6 +15,7 @@ extern int getLineNumber();
 extern int yyparse();
 extern void initMe();
 extern void hashPrint();
+extern astree_node * getAST();
 
 int main(int argc, char *argv[]){
 
@@ -35,6 +37,13 @@ int main(int argc, char *argv[]){
 	// hashPrint();
 
 	fprintf(stderr, "Compiled Successfully\n");
+
+	fprintf(stderr, "Uncompiling!\n");
+
+	FILE * out;
+	out = fopen("out.txt", "w+");
+
+	uncompileAST(getAST(), out);
 
  return 0;
 }
