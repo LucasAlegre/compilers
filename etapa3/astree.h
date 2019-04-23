@@ -64,6 +64,6 @@ astree_node* astree_create(int type, hash_node* symbol, astree_node* son0, astre
 
 void astree_print(int level, astree_node *node);
 
-void uncompileAST(astree_node * root, FILE * file);
+void uncompileAST(astree_node *root, FILE *file);
 
 #endif
