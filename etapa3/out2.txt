@@ -1,6 +1,7 @@
 byte a =  O ;
 byte 1 =  O ;
 int v[ IO ]:  O   O   O   O   O   O   O   O   O   O  ;
+int v2[ AC ]:  I  ;
 int mat[ IO ];
 float f =  IO.EE ;
 byte c =  'x' ;
@@ -15,7 +16,8 @@ loop( 1  <  IO ){
 1 = incn( 1 ,  I );
 a = incn( a ,  I );
 if(not  a ) then 
-leap;
+{
+leap};
 };
 print  "Incrementado algumas vezes fica " ,  a ,  "\n" ;
 if( a  ==  E ) then 
