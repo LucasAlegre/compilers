@@ -60,3 +60,19 @@ void hashPrint(void){
         }
     }
 }
+
+int hashCheckUndeclared(){
+	hash_node * node;
+	int undeclaredVariables = 0;
+	for(int i = 0; i < HASH_SIZE; i++){
+		if(Table[i] != NULL){
+			for(node = Table[i]; node != NULL; node = node->next){
+				if(node->type == SYMBOL_IDENTIFIER){
+					printf("Undeclared Variable: %s\n", node->text);				
+					undeclaredVariables++;
+				}
+			}
+		}
+	}
+	return undeclaredVariables;	
+}

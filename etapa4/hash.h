@@ -44,4 +44,6 @@ int hashAddress(char *text);
 
 void hashPrint(void);
 
+int hashCheckUndeclared();
+
 #endif

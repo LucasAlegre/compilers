@@ -3,6 +3,7 @@ int a[B]: O A;
 
 int main ()
 {
+	print(z);
 	print(x);
-	return 0;
+	return O;
 };

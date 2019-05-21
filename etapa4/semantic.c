@@ -14,8 +14,8 @@ int semanticVerification(astree_node* root){
     ROOT = root;	
 				
 	setTypes(root); 
-	/*checkUndeclared();
-	checkUsage(root);
+	checkUndeclared();
+	/*checkUsage(root);
 	checkOperands(root); */
 
     return SemanticErrors;
@@ -77,4 +77,7 @@ void setTypes(astree_node* node){
 }
 
 
-
+void checkUndeclared(){
+	int undeclaredVariables = hashCheckUndeclared();
+ 	SemanticErrors += undeclaredVariables;	
+}

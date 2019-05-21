@@ -1,0 +1,7 @@
+int x =  IO ;
+int a[ B ]:  O   A  ;
+int main(){
+print ( z );
+print ( x );
+return  O ;
+};

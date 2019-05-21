@@ -5,6 +5,6 @@
 
 int semanticVerification(astree_node* root);
 void setTypes(astree_node* node);
-
+void checkUndeclared();
 
 #endif
