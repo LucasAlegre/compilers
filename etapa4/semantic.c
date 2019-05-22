@@ -18,13 +18,14 @@ int semanticVerification(astree_node* root){
 	checkUndeclared();
 	checkUsage(root);
 	checkOperands(root);
+	checkReturns(root);
 
     return SemanticErrors;
 }
 
 void setIdentifierTypes(astree_node* node){
     if(node == NULL) return;
-
+	
     switch (node->type){
     case AST_DECVAR:
         if(node->symbol->type != SYMBOL_IDENTIFIER){
@@ -133,8 +134,7 @@ void checkUndeclared(){
 
 void checkUsage(astree_node *node){
     if(node == NULL) return;
-
-    switch (node->type){
+	switch (node->type){
         case AST_ATTR:
             if(node->symbol->type != SYMBOL_VAR){
                 fprintf(stderr, "Semantic ERROR in line %d: Attribution must be to a scalar variable.\n", node->lineNumber);
@@ -161,8 +161,8 @@ void checkUsage(astree_node *node){
             }
             break;
         case AST_FUNC:
-            // TODO checar tipo dos parametros, numero de parametros e tipo do retorno
-            break;
+			validateFunction(node);
+			break;
         case AST_READ:
             if(node->symbol->type != SYMBOL_VAR){
 				fprintf(stderr, "Semantic ERROR in line %d: read only allowed to scalar variables.\n", node->lineNumber);
@@ -218,4 +218,88 @@ int isLogicalOp(int nodetype){
 
 int greaterDatatype(int type1, int type2){
     return type1 > type2 ? type1 : type2;
+}
+
+void validateFunction(astree_node * node){
+	astree_node* declaration = findFunctionDeclaration(node->symbol->text, ROOT);
+	if(checkNumberOfArguments(node, declaration)){
+		compareCalledArguments(node->sons[0], declaration->sons[1]);					
+	}
+}
+
+bool checkNumberOfArguments(astree_node * node, astree_node * declaration){
+	int numberOfCalledArguments = getNumberOfArguments(node->sons[0]);
+	int numberOfDeclaredArguments = getNumberOfArguments(declaration->sons[1]);	
+	if(numberOfCalledArguments != numberOfDeclaredArguments){
+		printf("Uncompatible number Of Arguments for function %s, declared : %d, called : %d", declaration->symbol->text, numberOfDeclaredArguments, numberOfCalledArguments);
+		SemanticErrors++;
+		return false;
+	}
+	return true;
+}
+
+astree_node * findFunctionDeclaration(char * name, astree_node * node){
+	if(node->symbol != NULL && node->type == AST_DECFUNC && strcmp(node->symbol->text, name) == 0)
+		return node;
+
+	for(int i = 0; i < MAX_SONS; i++){
+		if(node->sons[i] == NULL)
+				return NULL;
+		astree_node * finding = findFunctionDeclaration(name, node->sons[i]) ;
+		if(finding != NULL)
+				return finding;
+	}
+	return NULL;
+}
+
+int getNumberOfArguments(astree_node * node){
+	if(node->sons[1] != NULL )
+		return 1 + getNumberOfArguments(node->sons[1]);
+	else
+		return 1;
+}
+
+bool hasSameType(astree_node * node1, astree_node * node2){	
+	bool equalDatatypes = node1->symbol->datatype == node2->symbol->datatype;
+	bool integerDatatypes = (isInteger(node1->symbol->datatype) && isInteger(node2->symbol->datatype)); 
+	bool vectorTypes = (node1->symbol->type == SYMBOL_VEC || node2->symbol->type == SYMBOL_VEC);
+	return (equalDatatypes || integerDatatypes) && !vectorTypes;
+}
+
+void compareCalledArguments(astree_node * node, astree_node * declaration){
+	
+	if(node->sons[0] != NULL){
+		if(!hasSameType(node->sons[0], declaration->sons[0])){
+			printf("Incompatible types %s : %s\n", node->sons[0]->symbol->text, declaration->sons[0]->symbol->text);
+			SemanticErrors++;
+		}
+		if(node->sons[1] != NULL)
+			compareCalledArguments(node->sons[1], declaration->sons[1]);
+	}
+}
+
+void isReturnCompatible(astree_node * node, int datatype){
+	
+	if(node!=NULL && node->type == AST_RETURN){
+		if(node->datatype != datatype)
+				printf("Return statement with wrong datatype in line %d", node->lineNumber);
+		SemanticErrors++;
+	}
+	for(int i = 0; i <MAX_SONS; i++){
+		if(node->sons[i] == NULL)
+			break;
+		isReturnCompatible(node->sons[i], datatype);
+	}
+}
+
+void checkReturns(astree_node * node){
+	if(node != NULL && node->type == AST_DECFUNC){
+		isReturnCompatible(node, node->symbol->datatype);
+	}
+
+	for(int i = 0; i < MAX_SONS; i++){
+		if(node->sons[i] == NULL)
+			break;
+		checkReturns(node->sons[i]);
+	}
 }
