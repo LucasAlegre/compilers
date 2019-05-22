@@ -143,7 +143,7 @@ cmd :																																			{$$=0;}
     | KW_IF '(' exp ')' KW_THEN cmd																				{$$=astree_create(AST_IF, 0, $3, $6, 0, 0, getLineNumber());}
     | KW_IF '(' exp ')' KW_THEN cmd KW_ELSE cmd														{$$=astree_create(AST_IFELSE, 0, $3, $6, $8, 0, getLineNumber());}
     | KW_LOOP '(' exp ')' cmd																							{$$=astree_create(AST_LOOP, 0, $3, $5, 0, 0, getLineNumber());}
-    | KW_LEAP																															{$$=astree_create(AST_LEAP, 0, 0, 0, 0, 0, getLineNumber());}
+    | KW_LEAP 																														{$$=astree_create(AST_LEAP, 0, 0, 0, 0, 0, getLineNumber());}
     ;
 
 exp : TK_IDENTIFIER																												{$$=astree_create(AST_SYMBOL, $1, 0, 0, 0, 0, getLineNumber());}

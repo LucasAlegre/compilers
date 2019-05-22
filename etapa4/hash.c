@@ -73,7 +73,7 @@ int hashCheckUndeclared(){
 		if(Table[i] != NULL){
 			for(node = Table[i]; node != NULL; node = node->next){
 				if(node->type == SYMBOL_IDENTIFIER){
-					fprintf(stderr, "Undeclared Variable: %s\n", node->text);				
+					fprintf(stderr, "Semantic ERROR: Variable %s not declared.\n", node->text);				
 					undeclaredVariables++;
 				}
 			}

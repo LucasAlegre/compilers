@@ -23,7 +23,7 @@ byte main ()
 
   print "Digite um numero: \n";
   read a;
-  loop (1<IO)
+  loop ((1<IO) and A == mat[A])
     {
     1 = incn(1,I);
     a = incn(a,I);

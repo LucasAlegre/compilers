@@ -25,7 +25,8 @@ int semanticVerification(astree_node* root){
 void setIdentifierTypes(astree_node* node){
     if(node == NULL) return;
 
-    if(node->type == AST_DECVAR){
+    switch (node->type){
+    case AST_DECVAR:
         if(node->symbol->type != SYMBOL_IDENTIFIER){
             fprintf(stderr,"Semantic ERROR in line %d: Variable %s redeclaration.\n", node->lineNumber, node->symbol->text);
             SemanticErrors++;
@@ -36,8 +37,8 @@ void setIdentifierTypes(astree_node* node){
             else if(node->sons[0]->type == AST_TPINT) node->symbol->datatype = DATATYPE_INT;
             else if(node->sons[0]->type == AST_TPFLOAT) node->symbol->datatype = DATATYPE_FLOAT;
         }
-    }
-    else if(node->type == AST_DECVEC){
+        break;
+    case AST_DECVEC:
         if(node->symbol->type != SYMBOL_IDENTIFIER){
             fprintf(stderr,"Semantic ERROR in line %d: Vector %s redeclaration.\n", node->lineNumber, node->symbol->text);
             SemanticErrors++;
@@ -48,8 +49,8 @@ void setIdentifierTypes(astree_node* node){
             else if(node->sons[0]->type == AST_TPINT) node->symbol->datatype = DATATYPE_INT;
             else if(node->sons[0]->type == AST_TPFLOAT) node->symbol->datatype = DATATYPE_FLOAT;
         }
-    }
-    else if(node->type == AST_DECFUNC){
+        break;
+    case AST_DECFUNC:
         if(node->symbol->type != SYMBOL_IDENTIFIER){
             fprintf(stderr,"Semantic ERROR in line %d: Function %s redeclaration.\n", node->lineNumber, node->symbol->text);
             SemanticErrors++;
@@ -60,8 +61,8 @@ void setIdentifierTypes(astree_node* node){
             else if(node->sons[0]->type == AST_TPINT) node->symbol->datatype = DATATYPE_INT;
             else if(node->sons[0]->type == AST_TPFLOAT) node->symbol->datatype = DATATYPE_FLOAT;
         }
-    }
-    else if(node->type == AST_PARAM){
+        break;
+    case AST_PARAM:
         if(node->symbol->type != SYMBOL_IDENTIFIER){
             fprintf(stderr,"Semantic ERROR in line %d: Parameter %s redeclaration.\n", node->lineNumber, node->symbol->text);
             SemanticErrors++;
@@ -72,7 +73,11 @@ void setIdentifierTypes(astree_node* node){
             else if(node->sons[0]->type == AST_TPINT) node->symbol->datatype = DATATYPE_INT;
             else if(node->sons[0]->type == AST_TPFLOAT) node->symbol->datatype = DATATYPE_FLOAT;
         }
+        break;
+    default:
+        break;
     }
+
     for(int i = 0; i < MAX_SONS; i++)
         setIdentifierTypes(node->sons[i]);
 }
@@ -84,14 +89,11 @@ void setNodeTypes(astree_node *node){
         setNodeTypes(node->sons[i]);
     }
 
-    if(node->type == AST_SYMBOL){
+    if(node->type == AST_SYMBOL || node->type == AST_FUNC || node->type == AST_VEC){
         node->datatype = node->symbol->datatype;
     }
     else if(node->type == AST_PAREN){
         node->datatype = node->sons[0]->datatype;
-    }
-    else if(node->type == AST_FUNC || node->type == AST_VEC){
-        node->datatype = node->symbol->datatype;
     }
     else if(isAritmeticOp(node->type)){
         astree_node* son0 = node->sons[0];
@@ -158,7 +160,26 @@ void checkUsage(astree_node *node){
                 SemanticErrors++;
             }
             break;
-        //TO CONTINUE ...
+        case AST_FUNC:
+            // TODO checar tipo dos parametros, numero de parametros e tipo do retorno
+            break;
+        case AST_READ:
+            if(node->symbol->type != SYMBOL_VAR){
+				fprintf(stderr, "Semantic ERROR in line %d: read only allowed to scalar variables.\n", node->lineNumber);
+				SemanticErrors++;
+			}
+            break;
+        case AST_PRINT:
+            // Acho que a análise sintática já filtra todos os erros do print, checar isso.
+            break;
+        case AST_IF:
+        case AST_IFELSE:
+        case AST_LOOP:
+            if(node->sons[0]->datatype != DATATYPE_BOOL){
+                fprintf(stderr, "Semantic ERROR in line %d: Condidtion must be a boolean expression.\n", node->lineNumber);
+				SemanticErrors++;
+            }
+            break;
         default:
             break;
     }
