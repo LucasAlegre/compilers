@@ -150,8 +150,8 @@ exp : TK_IDENTIFIER																												{$$=astree_create(AST_SYMBOL, $1,
     | TK_IDENTIFIER '[' exp ']'																						{$$=astree_create(AST_VEC, $1, $3, 0, 0, 0, getLineNumber());}
     | TK_IDENTIFIER '(' l_args ')'																				{$$=astree_create(AST_FUNC, $1, $3, 0, 0, 0, getLineNumber());}
     | literal																															{$$=$1;}
-    | exp '+' exp																													{$$=astree_create(AST_SUM, 0, $1, $3, 0, 0, getLineNumber());}
-    | exp '-' exp																													{$$=astree_create(AST_DEC, 0, $1, $3, 0, 0, getLineNumber());}
+    | exp '+' exp																													{$$=astree_create(AST_ADD, 0, $1, $3, 0, 0, getLineNumber());}
+    | exp '-' exp																													{$$=astree_create(AST_SUB, 0, $1, $3, 0, 0, getLineNumber());}
     | exp '*' exp																													{$$=astree_create(AST_MUL, 0, $1, $3, 0, 0, getLineNumber());}
     | exp '/' exp																													{$$=astree_create(AST_DIV, 0, $1, $3, 0, 0, getLineNumber());}
     | exp '<' exp																													{$$=astree_create(AST_LESS, 0, $1, $3, 0, 0, getLineNumber());}
@@ -188,15 +188,16 @@ element_print : LIT_STRING																								{$$=astree_create(AST_SYMBOL, 
 %%
 
 void checkSemantic(){
-  if (SemanticErrors > 0){
+  if(SemanticErrors > 0){
     fprintf(stderr, "%d Semantic Errors in Total.\n", SemanticErrors);
     exit(4);
   }
+  fprintf(stderr, "No Semantic Errors.\n");
 }
 
 int yyerror(char *err){
 
-	fprintf(stderr, "Syntactic ERROR in line = %d.\n", getLineNumber());
+	fprintf(stderr, "Syntactic ERROR in line %d.\n", getLineNumber());
 	exit(3);
 }
 

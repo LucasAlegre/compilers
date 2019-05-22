@@ -23,6 +23,11 @@ hash_node* hashInsert(int type, char* text){
     int address = hashAddress(text);
     newnode = (hash_node*) calloc(1, sizeof(hash_node));
     newnode->type = type;
+    if(newnode->type == SYMBOL_LIT_CHAR) newnode->datatype = DATATYPE_INT;
+    else if(newnode->type == SYMBOL_LIT_INT) newnode->datatype = DATATYPE_INT;
+    else if(newnode->type == SYMBOL_LIT_FLOAT) newnode->datatype = DATATYPE_FLOAT;
+    //else if(newnode->type == SYMBOL_LIT_STRING) newnode->datatype = DATATYPE_INT;
+
     newnode->text = calloc(strlen(text) + 1, sizeof(char));
     strcpy(newnode->text, text);
 
@@ -55,7 +60,7 @@ void hashPrint(void){
     for(int i = 0; i < HASH_SIZE; i++){
         if(Table[i] != NULL){
             for(node = Table[i]; node != NULL; node = node->next){
-                printf("Table[%d] - type: %d text: %s\n", i, node->type, node->text);
+                fprintf(stderr, "Table[%d] - type: %d datatype: %d text: %s\n", i, node->type, node->datatype, node->text);
             }
         }
     }
@@ -68,7 +73,7 @@ int hashCheckUndeclared(){
 		if(Table[i] != NULL){
 			for(node = Table[i]; node != NULL; node = node->next){
 				if(node->type == SYMBOL_IDENTIFIER){
-					printf("Undeclared Variable: %s\n", node->text);				
+					fprintf(stderr, "Undeclared Variable: %s\n", node->text);				
 					undeclaredVariables++;
 				}
 			}

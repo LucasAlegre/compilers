@@ -20,9 +20,10 @@
 #define SYMBOL_FUNC 12
 #define SYMBOL_PARAM 13
 
-#define SYMBOL_DATATYPE_INT 14
-#define SYMBOL_DATATYPE_BYTE 15
-#define SYMBOL_DATATYPE_FLOAT 16
+#define DATATYPE_BYTE 14
+#define DATATYPE_INT 15
+#define DATATYPE_FLOAT 16
+#define DATATYPE_BOOL 17
 
 typedef struct hash_node{
     int type;

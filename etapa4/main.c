@@ -40,9 +40,9 @@ int main(int argc, char *argv[]){
 
 	yyparse();
 	hashPrint();
-	fprintf(stderr, "Compiled Successfully.\n");
+	fprintf(stderr, "Compiled AST Successfully.\n");
 
-	fprintf(stderr, "Uncompiling!\n");
+	fprintf(stderr, "Uncompiling AST.\n");
 	uncompileAST(getAST(), out);
 	fclose(out);
 

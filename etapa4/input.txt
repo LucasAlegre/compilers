@@ -14,7 +14,6 @@ int v2[AC]: I;
 int mat [IO]; 
 float f = IO.EE;
 byte c = 'x';
-byte x = DE;
 
 byte main ()
   {
@@ -28,7 +27,7 @@ byte main ()
     {
     1 = incn(1,I);
     a = incn(a,I);
-    if (not a) then {leap};
+    if (not a > (1)) then {leap};
     };
 
   print "Incrementado algumas vezes fica ",a,"\n";

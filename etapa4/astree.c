@@ -54,8 +54,8 @@ void astree_print(int level, astree_node *node){
     case AST_LEAP: fprintf(stderr, "AST_LEAP"); break;
     case AST_VEC: fprintf(stderr, "AST_VEC"); break;
     case AST_FUNC: fprintf(stderr, "AST_FUNC"); break;
-    case AST_SUM: fprintf(stderr, "AST_SUM"); break;
-    case AST_DEC: fprintf(stderr, "AST_DEC"); break;
+    case AST_ADD: fprintf(stderr, "AST_ADD"); break;
+    case AST_SUB: fprintf(stderr, "AST_SUB"); break;
     case AST_MUL: fprintf(stderr, "AST_MUL"); break;
     case AST_DIV: fprintf(stderr, "AST_DIV"); break;
     case AST_LESS: fprintf(stderr, "AST_LESS"); break;
@@ -247,13 +247,13 @@ void uncompileAST(astree_node *node, FILE *file){
       fprintf(file, ")");
       break;
 
-    case AST_SUM :
+    case AST_ADD :
       uncompileAST(node->sons[0], file);
       fprintf(file, " + ");
       uncompileAST(node->sons[1], file);
       break;
 
-    case AST_DEC :
+    case AST_SUB :
       uncompileAST(node->sons[0], file);
       fprintf(file, " - ");
       uncompileAST(node->sons[1], file);

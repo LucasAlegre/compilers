@@ -30,8 +30,8 @@
 #define AST_LEAP 25
 #define AST_VEC 26
 #define AST_FUNC 27
-#define AST_SUM 28
-#define AST_DEC 29
+#define AST_ADD 28
+#define AST_SUB 29
 #define AST_MUL 30
 #define AST_DIV 31
 #define AST_LESS 32
@@ -56,6 +56,7 @@
 typedef struct astree
 {
     int type;
+    int datatype;
     int lineNumber;
     hash_node *symbol;
     struct astree *sons[MAX_SONS];
