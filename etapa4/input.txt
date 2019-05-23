@@ -19,13 +19,13 @@ byte main ()
   {
   a = C;
   v[a] = AO;
-  print v[a];
+  print v[a],"oie";
 
   print "Digite um numero: \n";
   read a;
   loop ((1<IO) and A == mat[A])
     {
-    1 = incn('d',I);
+    1 = incn(incn(a,a),I);
     a = incn(a,I);
     if (not a > (1+v[A])) then {leap};
     };
@@ -47,7 +47,8 @@ byte main ()
 
 byte incn ( byte x, byte n )
   {
-  return x+n
+  return (x*n / A) * O;
+  return A * n
   };
 
 

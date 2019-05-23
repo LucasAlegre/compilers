@@ -294,7 +294,7 @@ void compareCalledArguments(astree_node *node, astree_node *declaration){
 void isReturnCompatible(astree_node *node, int datatype){
 	if(node == NULL) return;
 	if(node->type == AST_RETURN){
-		if(isDatatypeCompatible(node->datatype, datatype)){
+		if(!isDatatypeCompatible(node->sons[0]->datatype, datatype)){
 			printf("Semantic ERROR in line %d: Return statement with wrong datatype.\n", node->lineNumber);
 			SemanticErrors++;
 		}
