@@ -1,14 +1,14 @@
-int x = IO;
-float z = O.O;
-int a[B]: O A;
+byte x = O.O;
+ZZ byte z = O.O;
+ZZ int a[B]: O A;
 
-float foo(float k, int r, int l)
-{
-	return O;
-};
+ZZfloat foo(float k, int r, int l)
+ZZ{
+ZZ	return O;
+ZZ};
 
 int main ()
 {
-	z = foo(z, x, a);
-	return O;
+ZZ	z = foo(z, x, a[O]);
+ZZ	return O;
 };

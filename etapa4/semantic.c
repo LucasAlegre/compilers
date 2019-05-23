@@ -32,6 +32,7 @@ void setIdentifierTypes(astree_node* node){
             fprintf(stderr,"Semantic ERROR in line %d: Variable %s redeclaration.\n", node->lineNumber, node->symbol->text);
             SemanticErrors++;
         }
+		// Test types inicialization
         else{
             node->symbol->type = SYMBOL_VAR;
             if(node->sons[0]->type == AST_TPBYTE) node->symbol->datatype = DATATYPE_BYTE;
@@ -44,6 +45,7 @@ void setIdentifierTypes(astree_node* node){
             fprintf(stderr,"Semantic ERROR in line %d: Vector %s redeclaration.\n", node->lineNumber, node->symbol->text);
             SemanticErrors++;
         }
+		// Test types inicialization
         else{
             node->symbol->type = SYMBOL_VEC;
             if(node->sons[0]->type == AST_TPBYTE) node->symbol->datatype = DATATYPE_BYTE;
@@ -100,7 +102,7 @@ void setNodeTypes(astree_node *node){
         astree_node* son0 = node->sons[0];
         astree_node* son1 = node->sons[1];
         if(!isDatatypeCompatible(son0->datatype, son1->datatype) || son0->datatype == DATATYPE_BOOL || son1->datatype == DATATYPE_BOOL){
-            fprintf(stderr, "Semantic ERROR in line %d: Aritmetic operation with incompatible data types.\n", node->lineNumber);
+            fprintf(stderr, "Semantic ERROR in line %d: Arithmetic operation with incompatible data types.\n", node->lineNumber);
             SemanticErrors++;
         }
         node->datatype = greaterDatatype(son0->datatype, son1->datatype);
@@ -139,7 +141,7 @@ void checkUsage(astree_node *node){
             if(node->symbol->type != SYMBOL_VAR){
                 fprintf(stderr, "Semantic ERROR in line %d: Attribution must be to a scalar variable.\n", node->lineNumber);
                 SemanticErrors++;
-            }
+            }	
             if(!isDatatypeCompatible(node->symbol->datatype, node->sons[0]->datatype)){
                 fprintf(stderr, "Semantic ERROR in line %d: Attribution with incompatible data type.\n", node->lineNumber);
                 SemanticErrors++;
@@ -176,7 +178,7 @@ void checkUsage(astree_node *node){
         case AST_IFELSE:
         case AST_LOOP:
             if(node->sons[0]->datatype != DATATYPE_BOOL){
-                fprintf(stderr, "Semantic ERROR in line %d: Condidtion must be a boolean expression.\n", node->lineNumber);
+                fprintf(stderr, "Semantic ERROR in line %d: Condition must be a boolean expression.\n", node->lineNumber);
 				SemanticErrors++;
             }
             break;
@@ -231,7 +233,7 @@ bool checkNumberOfArguments(astree_node * node, astree_node * declaration){
 	int numberOfCalledArguments = getNumberOfArguments(node->sons[0]);
 	int numberOfDeclaredArguments = getNumberOfArguments(declaration->sons[1]);	
 	if(numberOfCalledArguments != numberOfDeclaredArguments){
-		printf("Uncompatible number Of Arguments for function %s, declared : %d, called : %d", declaration->symbol->text, numberOfDeclaredArguments, numberOfCalledArguments);
+    	fprintf(stderr, "Semantic ERROR in line %d: Incompatible number of arguments.\n", node->lineNumber);
 		SemanticErrors++;
 		return false;
 	}
@@ -259,18 +261,28 @@ int getNumberOfArguments(astree_node * node){
 		return 1;
 }
 
-bool hasSameType(astree_node * node1, astree_node * node2){	
-	bool equalDatatypes = node1->symbol->datatype == node2->symbol->datatype;
-	bool integerDatatypes = (isInteger(node1->symbol->datatype) && isInteger(node2->symbol->datatype)); 
-	bool vectorTypes = (node1->symbol->type == SYMBOL_VEC || node2->symbol->type == SYMBOL_VEC);
-	return (equalDatatypes || integerDatatypes) && !vectorTypes;
+bool hasSameType(astree_node * node, astree_node * declaration){	
+/*	bool equalDatatypes = isDatatypeCompatible(node->symbol->datatype == declaration->symbol->datatype);
+	bool vectorNode = node->symbol->type == SYMBOL_VEC;
+	bool vectorDeclaration = declaration->symbol->type == SYMBOL_VEC;
+	if(vectorNode && node->sons[0] != NULL){
+		vectorNode = false;
+	}
+	return (equalDatatypes) && !(vectorNode || vectorDeclaration);
+*/
+
+	bool equalDatatypes = isDatatypeCompatible(node->symbol->datatype, declaration->symbol->datatype);
+	bool isSymbol = node->type == AST_SYMBOL;
+	if((isSymbol && node->symbol->type != SYMBOL_VAR) || !equalDatatypes )
+			return false;
+	return true;
 }
 
 void compareCalledArguments(astree_node * node, astree_node * declaration){
 	
 	if(node->sons[0] != NULL){
 		if(!hasSameType(node->sons[0], declaration->sons[0])){
-			printf("Incompatible types %s : %s\n", node->sons[0]->symbol->text, declaration->sons[0]->symbol->text);
+			fprintf(stderr, "Semantic ERROR in line %d: Incompatible argument types\n", node->lineNumber);
 			SemanticErrors++;
 		}
 		if(node->sons[1] != NULL)
@@ -281,9 +293,10 @@ void compareCalledArguments(astree_node * node, astree_node * declaration){
 void isReturnCompatible(astree_node * node, int datatype){
 	
 	if(node!=NULL && node->type == AST_RETURN){
-		if(node->datatype != datatype)
-				printf("Return statement with wrong datatype in line %d", node->lineNumber);
-		SemanticErrors++;
+		if(isDatatypeCompatible(node->datatype, datatype)){
+			printf("Return statement with wrong datatype in line %d\n", node->lineNumber);
+			SemanticErrors++;
+		}
 	}
 	for(int i = 0; i <MAX_SONS; i++){
 		if(node->sons[i] == NULL)

@@ -7,15 +7,15 @@
 	#include <stdlib.h>
 	#include <string.h>
 	#include "hash.h"
-  #include "astree.h"
-  #include "semantic.h"
+	#include "astree.h"
+	#include "semantic.h"
 
 	int yylex();
 	int yyerror(char *message);
 	extern int getLineNumber();
 
-  int SemanticErrors;
-  astree_node *Root;
+  	int SemanticErrors;
+	astree_node *Root;
 
 %}
 

@@ -1,10 +1,3 @@
-int x =  IO ;
-float z =  O.O ;
-int a[ B ]:  O   A  ;
-float foo(float k, int r, int l){
-return  O ;
-};
+byte x =  O.O ;
 int main(){
-z = foo( z ,  x ,  a );
-return  O ;
 };
