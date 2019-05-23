@@ -15,6 +15,8 @@ void checkUndeclared();
 
 void checkUsage(astree_node* node);
 
+bool checkEveryVecElement(astree_node * node, int datatype);
+
 void checkOperands(astree_node* node);
 
 int isDatatypeCompatible(int datatype1, int datatype2);

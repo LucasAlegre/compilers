@@ -1,3 +1,4 @@
-byte x =  O.O ;
+int x =  O ;
+int a[ B ]:  O.O   A.O  ;
 int main(){
 };

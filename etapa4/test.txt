@@ -1,6 +1,6 @@
-byte x = O.O;
+int x = O;
 ZZ byte z = O.O;
-ZZ int a[B]: O A;
+int a[B]: O.O A.O;
 
 ZZfloat foo(float k, int r, int l)
 ZZ{

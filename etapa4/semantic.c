@@ -32,26 +32,34 @@ void setIdentifierTypes(astree_node* node){
             fprintf(stderr,"Semantic ERROR in line %d: Variable %s redeclaration.\n", node->lineNumber, node->symbol->text);
             SemanticErrors++;
         }
-		// Test types inicialization
         else{
             node->symbol->type = SYMBOL_VAR;
             if(node->sons[0]->type == AST_TPBYTE) node->symbol->datatype = DATATYPE_BYTE;
             else if(node->sons[0]->type == AST_TPINT) node->symbol->datatype = DATATYPE_INT;
             else if(node->sons[0]->type == AST_TPFLOAT) node->symbol->datatype = DATATYPE_FLOAT;
         }
+
+		if(!isDatatypeCompatible(node->symbol->datatype, node->sons[1]->symbol->datatype)){
+			fprintf(stderr, "Semantic ERROR in line %d: Variable declaration with mixed dataypes\n", node->lineNumber);
+			SemanticErrors++;
+		}
+
         break;
     case AST_DECVEC:
         if(node->symbol->type != SYMBOL_IDENTIFIER){
             fprintf(stderr,"Semantic ERROR in line %d: Vector %s redeclaration.\n", node->lineNumber, node->symbol->text);
             SemanticErrors++;
         }
-		// Test types inicialization
         else{
             node->symbol->type = SYMBOL_VEC;
             if(node->sons[0]->type == AST_TPBYTE) node->symbol->datatype = DATATYPE_BYTE;
             else if(node->sons[0]->type == AST_TPINT) node->symbol->datatype = DATATYPE_INT;
             else if(node->sons[0]->type == AST_TPFLOAT) node->symbol->datatype = DATATYPE_FLOAT;
         }
+		if(!checkEveryVecElement(node->sons[2], node->symbol->datatype)){
+			fprintf(stderr, "Semantic ERROR on line %d: Vector declaration with elements of mixed datatype\n", node->lineNumber);
+			SemanticErrors++;
+		}
         break;
     case AST_DECFUNC:
         if(node->symbol->type != SYMBOL_IDENTIFIER){
@@ -83,6 +91,16 @@ void setIdentifierTypes(astree_node* node){
 
     for(int i = 0; i < MAX_SONS; i++)
         setIdentifierTypes(node->sons[i]);
+}
+
+bool checkEveryVecElement(astree_node * node, int datatype){	
+	if(node != NULL){
+		if(!isDatatypeCompatible(node->sons[0]->symbol->datatype, datatype))
+			return false;
+		if(node->sons[1] != NULL)
+			return checkEveryVecElement(node->sons[1], datatype);
+	}
+	return true;
 }
 
 void setNodeTypes(astree_node *node){
