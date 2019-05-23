@@ -262,15 +262,6 @@ int getNumberOfArguments(astree_node * node){
 }
 
 bool hasSameType(astree_node * node, astree_node * declaration){	
-/*	bool equalDatatypes = isDatatypeCompatible(node->symbol->datatype == declaration->symbol->datatype);
-	bool vectorNode = node->symbol->type == SYMBOL_VEC;
-	bool vectorDeclaration = declaration->symbol->type == SYMBOL_VEC;
-	if(vectorNode && node->sons[0] != NULL){
-		vectorNode = false;
-	}
-	return (equalDatatypes) && !(vectorNode || vectorDeclaration);
-*/
-
 	bool equalDatatypes = isDatatypeCompatible(node->symbol->datatype, declaration->symbol->datatype);
 	bool isSymbol = node->type == AST_SYMBOL;
 	if((isSymbol && node->symbol->type != SYMBOL_VAR) || !equalDatatypes )
