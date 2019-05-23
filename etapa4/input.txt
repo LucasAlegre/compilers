@@ -8,7 +8,7 @@ XXX
 ZZ UFRGS - Compiladores - Marcelo Johann - 2019/1
 
 byte a = O;
-byte 1 = O;
+int 1 = O;
 int v [IO]: O O O O O O O O O O;
 int v2[AC]: I;
 int mat [IO]; 

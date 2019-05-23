@@ -279,11 +279,16 @@ int getNumberOfArguments(astree_node * node){
 		return 1;
 }
 
-bool hasSameType(astree_node * node, astree_node * declaration){	
+bool hasSameType(astree_node * node, astree_node * declaration){
+	bool isLiteral = node->type == AST_TPINT || node->type == AST_TPBYTE || node->type == AST_TPFLOAT;
+	bool isAcceptableSymbol = node->symbol->type == SYMBOL_VAR ||
+							  node->symbol->type == SYMBOL_LIT_INT || node->symbol->type == SYMBOL_LIT_FLOAT; 
 	bool equalDatatypes = isDatatypeCompatible(node->symbol->datatype, declaration->symbol->datatype);
 	bool isSymbol = node->type == AST_SYMBOL;
-	if((isSymbol && node->symbol->type != SYMBOL_VAR) || !equalDatatypes )
+	if((isSymbol && !(isAcceptableSymbol)) || !equalDatatypes ){
+			fprintf(stderr, "%d ------ %d", declaration->symbol->datatype, node->symbol->type);
 			return false;
+	}
 	return true;
 }
 
