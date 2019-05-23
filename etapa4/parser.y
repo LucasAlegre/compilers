@@ -192,7 +192,6 @@ void checkSemantic(){
     fprintf(stderr, "%d Semantic Errors in Total.\n", SemanticErrors);
     exit(4);
   }
-  fprintf(stderr, "No Semantic Errors.\n");
 }
 
 int yyerror(char *err){

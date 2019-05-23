@@ -39,7 +39,7 @@ int main(int argc, char *argv[]){
 	initMe();
 
 	yyparse();
-	hashPrint();
+	//hashPrint();
 	fprintf(stderr, "Compiled AST Successfully.\n");
 
 	fprintf(stderr, "Uncompiling AST.\n");
@@ -47,6 +47,8 @@ int main(int argc, char *argv[]){
 	fclose(out);
 
 	checkSemantic();
+
+	fprintf(stderr, "No Semantic Errors.\n");
 
 	return 0;
 }

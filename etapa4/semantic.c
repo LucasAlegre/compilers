@@ -8,17 +8,16 @@
 #include "astree.h"
 
 int SemanticErrors = 0;
-astree_node* ROOT;
+astree_node *ROOT;
 
 int semanticVerification(astree_node* root){
-    ROOT = root;	
+    ROOT = root;
 				
 	setIdentifierTypes(root); 
     setNodeTypes(root);
 	checkUndeclared();
 	checkUsage(root);
-	checkOperands(root);
-	checkReturns(root);
+    checkReturns(root);
 
     return SemanticErrors;
 }
@@ -38,12 +37,10 @@ void setIdentifierTypes(astree_node* node){
             else if(node->sons[0]->type == AST_TPINT) node->symbol->datatype = DATATYPE_INT;
             else if(node->sons[0]->type == AST_TPFLOAT) node->symbol->datatype = DATATYPE_FLOAT;
         }
-
 		if(!isDatatypeCompatible(node->symbol->datatype, node->sons[1]->symbol->datatype)){
 			fprintf(stderr, "Semantic ERROR in line %d: Variable declaration with mixed dataypes\n", node->lineNumber);
 			SemanticErrors++;
 		}
-
         break;
     case AST_DECVEC:
         if(node->symbol->type != SYMBOL_IDENTIFIER){
@@ -88,7 +85,6 @@ void setIdentifierTypes(astree_node* node){
     default:
         break;
     }
-
     for(int i = 0; i < MAX_SONS; i++)
         setIdentifierTypes(node->sons[i]);
 }
@@ -165,7 +161,6 @@ void checkUsage(astree_node *node){
                 SemanticErrors++;
             }
             break;
-        
         case AST_VECATTR:
             if(node->symbol->type != SYMBOL_VEC){
                 fprintf(stderr, "Semantic ERROR in line %d: Indexing only allowed for vectors.\n", node->lineNumber);
@@ -190,7 +185,7 @@ void checkUsage(astree_node *node){
 			}
             break;
         case AST_PRINT:
-            // Acho que a análise sintática já filtra todos os erros do print, checar isso.
+            // Acho que a análise sintática já filtra todos os erros do print.
             break;
         case AST_IF:
         case AST_IFELSE:
@@ -206,10 +201,6 @@ void checkUsage(astree_node *node){
 
     for(int i = 0; i < MAX_SONS; i++)
 		checkUsage(node->sons[i]);
-}
-
-void checkOperands(astree_node *node){
-
 }
 
 int isDatatypeCompatible(int datatype1, int datatype2){
@@ -240,14 +231,14 @@ int greaterDatatype(int type1, int type2){
     return type1 > type2 ? type1 : type2;
 }
 
-void validateFunction(astree_node * node){
+void validateFunction(astree_node *node){
 	astree_node* declaration = findFunctionDeclaration(node->symbol->text, ROOT);
 	if(checkNumberOfArguments(node, declaration)){
 		compareCalledArguments(node->sons[0], declaration->sons[1]);					
 	}
 }
 
-bool checkNumberOfArguments(astree_node * node, astree_node * declaration){
+bool checkNumberOfArguments(astree_node *node, astree_node *declaration){
 	int numberOfCalledArguments = getNumberOfArguments(node->sons[0]);
 	int numberOfDeclaredArguments = getNumberOfArguments(declaration->sons[1]);	
 	if(numberOfCalledArguments != numberOfDeclaredArguments){
@@ -258,63 +249,57 @@ bool checkNumberOfArguments(astree_node * node, astree_node * declaration){
 	return true;
 }
 
-astree_node * findFunctionDeclaration(char * name, astree_node * node){
+astree_node* findFunctionDeclaration(char * name, astree_node * node){
 	if(node->symbol != NULL && node->type == AST_DECFUNC && strcmp(node->symbol->text, name) == 0)
 		return node;
 
 	for(int i = 0; i < MAX_SONS; i++){
 		if(node->sons[i] == NULL)
-				return NULL;
+			return NULL;
 		astree_node * finding = findFunctionDeclaration(name, node->sons[i]) ;
 		if(finding != NULL)
-				return finding;
+			return finding;
 	}
 	return NULL;
 }
 
 int getNumberOfArguments(astree_node * node){
-	if(node->sons[1] != NULL )
+	if(node->sons[1] != NULL)
 		return 1 + getNumberOfArguments(node->sons[1]);
 	else
-		return 1;
+		return 0;
 }
 
-bool hasSameType(astree_node * node, astree_node * declaration){
-	bool isLiteral = node->type == AST_TPINT || node->type == AST_TPBYTE || node->type == AST_TPFLOAT;
-	bool isAcceptableSymbol = node->symbol->type == SYMBOL_VAR ||
-							  node->symbol->type == SYMBOL_LIT_INT || node->symbol->type == SYMBOL_LIT_FLOAT; 
-	bool equalDatatypes = isDatatypeCompatible(node->symbol->datatype, declaration->symbol->datatype);
-	bool isSymbol = node->type == AST_SYMBOL;
-	if((isSymbol && !(isAcceptableSymbol)) || !equalDatatypes ){
-			fprintf(stderr, "%d ------ %d", declaration->symbol->datatype, node->symbol->type);
-			return false;
-	}
-	return true;
-}
-
-void compareCalledArguments(astree_node * node, astree_node * declaration){
-	
+void compareCalledArguments(astree_node *node, astree_node *declaration){
 	if(node->sons[0] != NULL){
-		if(!hasSameType(node->sons[0], declaration->sons[0])){
+		if(!isDatatypeCompatible(node->sons[0]->datatype, declaration->sons[0]->symbol->datatype)){
 			fprintf(stderr, "Semantic ERROR in line %d: Incompatible argument types\n", node->lineNumber);
 			SemanticErrors++;
 		}
+        if(node->sons[0]->type == AST_SYMBOL){
+            if(node->sons[0]->symbol->type == SYMBOL_FUNC){
+                fprintf(stderr, "Semantic ERROR in line %d: Cannot pass function as argument\n", node->lineNumber);
+			    SemanticErrors++;
+            }
+            else if(node->sons[0]->symbol->type == SYMBOL_VEC){
+                fprintf(stderr, "Semantic ERROR in line %d: Cannot pass vector as argument\n", node->lineNumber);
+			    SemanticErrors++;
+            }
+        }
 		if(node->sons[1] != NULL)
 			compareCalledArguments(node->sons[1], declaration->sons[1]);
 	}
 }
 
-void isReturnCompatible(astree_node * node, int datatype){
-	
-	if(node!=NULL && node->type == AST_RETURN){
+void isReturnCompatible(astree_node *node, int datatype){
+	if(node == NULL) return;
+	if(node->type == AST_RETURN){
 		if(isDatatypeCompatible(node->datatype, datatype)){
-			printf("Return statement with wrong datatype in line %d\n", node->lineNumber);
+			printf("Semantic ERROR in line %d: Return statement with wrong datatype.\n", node->lineNumber);
 			SemanticErrors++;
 		}
 	}
-	for(int i = 0; i <MAX_SONS; i++){
-		if(node->sons[i] == NULL)
-			break;
+	for(int i = 0; i < MAX_SONS; i++){
 		isReturnCompatible(node->sons[i], datatype);
 	}
 }
@@ -330,3 +315,4 @@ void checkReturns(astree_node * node){
 		checkReturns(node->sons[i]);
 	}
 }
+
