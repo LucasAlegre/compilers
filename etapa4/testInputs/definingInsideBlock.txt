@@ -1,6 +1,0 @@
-int main()
-{
-	b = I;
-	ZZ error on line 5!
-	int a = O;
-}

@@ -5,7 +5,9 @@ int v2[ AC ]:  I  ;
 int mat[ IO ];
 float f =  IO.EE ;
 byte c =  'x' ;
+byte b[ A ]:  A  ;
 byte main(){
+b[ O ] =  A ;
 a =  C ;
 v[ a ] =  AO ;
 print v[ a ],  "oie" ;
@@ -13,16 +15,22 @@ print  "Digite um numero: \n" ;
 read a;
 loop(( 1  <  IO ) and  A  == mat[ A ]){
 1 = incn(incn( a ,  a ),  I );
-a = incn( a ,  I );
+a = incn( a ,  A );
 if(not  a  > ( 1  + v[ A ])) then 
 {
 leap};
 };
-print  "Incrementado algumas vezes fica " ,  a ,  "\n" ;
+print  "Incrementado algumas vezes fica " ,  b ,  "\n" ;
 if( a  ==  E ) then 
 print  "Parou no meio\n" ;
 if( a  ==  II  or  a  ==  IC ) then 
+{
 print  "Var a ficou II ou IC\n" ;
+a =  A ;
+;
+;
+}else
+a =  'z' ;
 if( a  ==  IO ) then 
 else
 ;
