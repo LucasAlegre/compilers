@@ -39,6 +39,8 @@ int greaterDatatype(int type1, int type2);
 
 void validateFunction(astree_node * node);
 
+void checkPrint(astree_node *node);
+
 astree_node *findFunctionDeclaration(char * name, astree_node * node);
 
 bool checkNumberOfArguments(astree_node * node, astree_node * declaration);

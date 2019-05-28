@@ -1,7 +1,7 @@
 byte a =  O ;
 int 1 =  'c' ;
-int v[ IO ]:  O   O   O   O   O   O   O   O   O   O  ;
-int v2[ AC ]:  I  ;
+int v[ IO ];
+float v2[ AC ]:  I.I  ;
 int mat[ IO ];
 float f =  IO.EE ;
 byte c =  'x' ;
@@ -13,14 +13,14 @@ v[ a ] =  AO ;
 print v[ a ],  "oie" ;
 print  "Digite um numero: \n" ;
 read a;
-loop(( 1  <  IO ) and  A  == mat[ A ]){
+loop(( 1  <  IO ) and  A  == (v2[ A ])){
 1 = incn(incn( a ,  a ),  I );
 a = incn( a ,  A );
-if(not  a  > ( 1  + v[ A ])) then 
+if(not ( A  +  a ) > ( 1  + v[ A ])) then 
 {
 leap};
 };
-print  "Incrementado algumas vezes fica " ,  b ,  "\n" ;
+print  "Incrementado algumas vezes fica " ,  a ,  "\n" ;
 if( a  ==  E ) then 
 print  "Parou no meio\n" ;
 if( a  ==  II  or  a  ==  IC ) then 
@@ -44,5 +44,7 @@ else
 };
 };
 byte incn(byte x, byte n){
+a = incn( A ,  A );
+a = incn( A ,  A );
 return ( x  *  n  /  A ) *  O ;
-return  A  *  n };
+return  A  /  I };

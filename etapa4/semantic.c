@@ -89,16 +89,6 @@ void setIdentifierTypes(astree_node* node){
         setIdentifierTypes(node->sons[i]);
 }
 
-bool checkEveryVecElement(astree_node * node, int datatype){	
-	if(node != NULL){
-		if(!isDatatypeCompatible(node->sons[0]->symbol->datatype, datatype))
-			return false;
-		if(node->sons[1] != NULL)
-			return checkEveryVecElement(node->sons[1], datatype);
-	}
-	return true;
-}
-
 void setNodeTypes(astree_node *node){
     if(node == NULL) return;
 
@@ -106,7 +96,14 @@ void setNodeTypes(astree_node *node){
         setNodeTypes(node->sons[i]);
     }
 
-    if(node->type == AST_SYMBOL || node->type == AST_FUNC || node->type == AST_VEC){
+    if(node->type == AST_SYMBOL){
+        if(node->symbol->type == SYMBOL_VEC || node->symbol->type == SYMBOL_FUNC){
+            fprintf(stderr, "Semantic ERROR in line %d: function/vector used as scalar variable.\n", node->lineNumber);
+            SemanticErrors++;
+        }
+        node->datatype = node->symbol->datatype;
+    }
+    else if(node->type == AST_FUNC || node->type == AST_VEC){
         node->datatype = node->symbol->datatype;
     }
     else if(node->type == AST_PAREN){
@@ -155,7 +152,7 @@ void checkUsage(astree_node *node){
             if(node->symbol->type != SYMBOL_VAR){
                 fprintf(stderr, "Semantic ERROR in line %d: Attribution must be to a scalar variable.\n", node->lineNumber);
                 SemanticErrors++;
-            }	
+            }
             if(!isDatatypeCompatible(node->symbol->datatype, node->sons[0]->datatype)){
                 fprintf(stderr, "Semantic ERROR in line %d: Attribution with incompatible data type.\n", node->lineNumber);
                 SemanticErrors++;
@@ -185,7 +182,7 @@ void checkUsage(astree_node *node){
 			}
             break;
         case AST_PRINT:
-            // Acho que a análise sintática já filtra todos os erros do print.
+            checkPrint(node->sons[0]);
             break;
         case AST_IF:
         case AST_IFELSE:
@@ -231,9 +228,30 @@ int greaterDatatype(int type1, int type2){
     return type1 > type2 ? type1 : type2;
 }
 
+void checkPrint(astree_node *node){
+    if (node == NULL) return;
+
+    if(node->sons[0]->type == AST_SYMBOL){
+        if(node->sons[0]->symbol->type == SYMBOL_FUNC){
+            fprintf(stderr, "Semantic ERROR in line %d: Cannot print function\n", node->lineNumber);
+            SemanticErrors++;
+        }
+        else if(node->sons[0]->symbol->type == SYMBOL_VEC){
+            fprintf(stderr, "Semantic ERROR in line %d: Cannot print vector\n", node->lineNumber);
+            SemanticErrors++;
+        }
+    }
+    checkPrint(node->sons[1]);
+
+}
+
 void validateFunction(astree_node *node){
 	astree_node* declaration = findFunctionDeclaration(node->symbol->text, ROOT);
-	if(checkNumberOfArguments(node, declaration)){
+    if(declaration == NULL){
+        fprintf(stderr, "Semantic ERROR in line %d: Only functions can be called.\n", node->lineNumber);
+        SemanticErrors++;
+    }
+	else if(checkNumberOfArguments(node, declaration)){
 		compareCalledArguments(node->sons[0], declaration->sons[1]);					
 	}
 }
@@ -264,6 +282,7 @@ astree_node* findFunctionDeclaration(char * name, astree_node * node){
 }
 
 int getNumberOfArguments(astree_node * node){
+    if(node == NULL) return 0;
 	if(node->sons[1] != NULL)
 		return 1 + getNumberOfArguments(node->sons[1]);
 	else
@@ -289,6 +308,16 @@ void compareCalledArguments(astree_node *node, astree_node *declaration){
 		if(node->sons[1] != NULL)
 			compareCalledArguments(node->sons[1], declaration->sons[1]);
 	}
+}
+
+bool checkEveryVecElement(astree_node * node, int datatype){	
+	if(node != NULL){
+		if(!isDatatypeCompatible(node->sons[0]->symbol->datatype, datatype))
+			return false;
+		if(node->sons[1] != NULL)
+			return checkEveryVecElement(node->sons[1], datatype);
+	}
+	return true;
 }
 
 void isReturnCompatible(astree_node *node, int datatype){
