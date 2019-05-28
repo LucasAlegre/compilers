@@ -1,0 +1,60 @@
+XXX
+	ETAPA 4 - Compiladores - 2019/1 Turma A - Prof. Marcelo Johann
+	Alunos:
+		Guilherme Haetinger e Lucas Alegre 
+
+XXX
+
+ZZ UFRGS - Compiladores - Marcelo Johann - 2019/1
+
+byte a = O;
+int 1 = 'c';
+int v [IO];
+float v2[AC]: I.I;
+int mat [IO]; 
+float f = IO.EE;
+byte c = 'x';
+byte b[A]: A;
+
+byte main ()
+  {
+  b[O] = A;
+  a = C;
+  v[a] = AO;
+  print v[a],"oie";
+  
+  print "Digite um numero: \n";
+  read a;
+  loop ((1<IO) and A == (v2[A]))
+    {
+    1 = incn(incn(a,a),I);
+    a = incn(a,A);
+    if (not (A+a) > (1+v[A])) then {leap};
+    };
+
+  print "Incrementado algumas vezes fica ",a,"\n";
+
+  if (a==E) then 
+    print "Parou no meio\n";
+
+  if ( a==II or a == IC ) then {
+    print "Var a ficou II ou IC\n"; a=A; ; ;
+  }
+  else a = 'z';
+
+  if (a==IO) then else
+    ;
+  ;;;
+  {;};
+  {};
+  };
+
+byte incn ( byte x, byte n )
+  {
+  a = incn(A, A);
+  a = incn(A, A);
+  return (x*n / A) * O;
+  return A / I
+  };
+
+
