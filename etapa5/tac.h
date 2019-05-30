@@ -27,11 +27,15 @@
 
 typedef struct tac_struct{
 	int type;
-	Hash_Node *res;
-	Hash_Node *op1;
-	Hash_Node *op2;
+	hash_node *res;
+	hash_node *op1;
+	hash_node *op2;
 	struct tac_struct *prev;
 	struct tac_struct *next; 
 } tac;
+
+tac* tacCreate(int type, hash_node *res, hash_node *op1, hash_node *op2);
+
+tac* tacJoin(tac* l1, tac* l2);
 
 #endif

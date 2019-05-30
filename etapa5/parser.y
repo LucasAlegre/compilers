@@ -14,7 +14,7 @@
 	int yyerror(char *message);
 	extern int getLineNumber();
 
-  	int SemanticErrors;
+  int SemanticErrors;
 	astree_node *Root;
 
 %}
