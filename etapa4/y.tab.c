@@ -1,8 +1,9 @@
-/* A Bison parser, made by GNU Bison 3.0.4.  */
+/* A Bison parser, made by GNU Bison 3.3.2.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2019 Free Software Foundation,
+   Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -40,11 +41,14 @@
    define necessary library symbols; they are noted "INFRINGES ON
    USER NAME SPACE" below.  */
 
+/* Undocumented macros, especially those whose name start with YY_,
+   are private implementation details.  Do not rely on them.  */
+
 /* Identify Bison output.  */
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "3.0.4"
+#define YYBISON_VERSION "3.3.2"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -61,8 +65,8 @@
 
 
 
-/* Copy the first part of user declarations.  */
-#line 1 "parser.y" /* yacc.c:339  */
+/* First part of user prologue.  */
+#line 1 "parser.y" /* yacc.c:337  */
 
 /*	ETAPA 4 - Compiladores - 2019/1 Turma A - Prof. Marcelo Johann
 	Alunos:
@@ -83,13 +87,16 @@
 	astree_node *Root;
 
 
-#line 87 "y.tab.c" /* yacc.c:339  */
-
+#line 91 "y.tab.c" /* yacc.c:337  */
 # ifndef YY_NULLPTR
-#  if defined __cplusplus && 201103L <= __cplusplus
-#   define YY_NULLPTR nullptr
+#  if defined __cplusplus
+#   if 201103L <= __cplusplus
+#    define YY_NULLPTR nullptr
+#   else
+#    define YY_NULLPTR 0
+#   endif
 #  else
-#   define YY_NULLPTR 0
+#   define YY_NULLPTR ((void*)0)
 #  endif
 # endif
 
@@ -175,12 +182,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 22 "parser.y" /* yacc.c:355  */
+#line 22 "parser.y" /* yacc.c:352  */
 
 	hash_node *symbol;
 	astree_node *astree;
 
-#line 184 "y.tab.c" /* yacc.c:355  */
+#line 191 "y.tab.c" /* yacc.c:352  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -195,9 +202,7 @@ int yyparse (void);
 
 #endif /* !YY_YY_Y_TAB_H_INCLUDED  */
 
-/* Copy the second part of user declarations.  */
 
-#line 201 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -218,13 +223,13 @@ typedef signed char yytype_int8;
 #ifdef YYTYPE_UINT16
 typedef YYTYPE_UINT16 yytype_uint16;
 #else
-typedef unsigned short int yytype_uint16;
+typedef unsigned short yytype_uint16;
 #endif
 
 #ifdef YYTYPE_INT16
 typedef YYTYPE_INT16 yytype_int16;
 #else
-typedef short int yytype_int16;
+typedef short yytype_int16;
 #endif
 
 #ifndef YYSIZE_T
@@ -236,7 +241,7 @@ typedef short int yytype_int16;
 #  include <stddef.h> /* INFRINGES ON USER NAME SPACE */
 #  define YYSIZE_T size_t
 # else
-#  define YYSIZE_T unsigned int
+#  define YYSIZE_T unsigned
 # endif
 #endif
 
@@ -272,15 +277,6 @@ typedef short int yytype_int16;
 # define YY_ATTRIBUTE_UNUSED YY_ATTRIBUTE ((__unused__))
 #endif
 
-#if !defined _Noreturn \
-     && (!defined __STDC_VERSION__ || __STDC_VERSION__ < 201112)
-# if defined _MSC_VER && 1200 <= _MSC_VER
-#  define _Noreturn __declspec (noreturn)
-# else
-#  define _Noreturn YY_ATTRIBUTE ((__noreturn__))
-# endif
-#endif
-
 /* Suppress unused-variable warnings by "using" E.  */
 #if ! defined lint || defined __GNUC__
 # define YYUSE(E) ((void) (E))
@@ -288,7 +284,7 @@ typedef short int yytype_int16;
 # define YYUSE(E) /* empty */
 #endif
 
-#if defined __GNUC__ && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
+#if defined __GNUC__ && ! defined __ICC && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
 /* Suppress an incorrect diagnostic about yylval being uninitialized.  */
 # define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN \
     _Pragma ("GCC diagnostic push") \
@@ -450,16 +446,16 @@ union yyalloc
 /* YYNSTATES -- Number of states.  */
 #define YYNSTATES  125
 
-/* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
-   by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   281
 
+/* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
+   as returned by yylex, with out-of-bounds checking.  */
 #define YYTRANSLATE(YYX)                                                \
-  ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
+  ((unsigned) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
 
 /* YYTRANSLATE[TOKEN-NUM] -- Symbol number corresponding to TOKEN-NUM
-   as returned by yylex, without out-of-bounds checking.  */
+   as returned by yylex.  */
 static const yytype_uint8 yytranslate[] =
 {
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -715,22 +711,22 @@ static const yytype_uint8 yyr2[] =
 
 #define YYRECOVERING()  (!!yyerrstatus)
 
-#define YYBACKUP(Token, Value)                                  \
-do                                                              \
-  if (yychar == YYEMPTY)                                        \
-    {                                                           \
-      yychar = (Token);                                         \
-      yylval = (Value);                                         \
-      YYPOPSTACK (yylen);                                       \
-      yystate = *yyssp;                                         \
-      goto yybackup;                                            \
-    }                                                           \
-  else                                                          \
-    {                                                           \
-      yyerror (YY_("syntax error: cannot back up")); \
-      YYERROR;                                                  \
-    }                                                           \
-while (0)
+#define YYBACKUP(Token, Value)                                    \
+  do                                                              \
+    if (yychar == YYEMPTY)                                        \
+      {                                                           \
+        yychar = (Token);                                         \
+        yylval = (Value);                                         \
+        YYPOPSTACK (yylen);                                       \
+        yystate = *yyssp;                                         \
+        goto yybackup;                                            \
+      }                                                           \
+    else                                                          \
+      {                                                           \
+        yyerror (YY_("syntax error: cannot back up")); \
+        YYERROR;                                                  \
+      }                                                           \
+  while (0)
 
 /* Error token number */
 #define YYTERROR        1
@@ -770,37 +766,37 @@ do {                                                                      \
 } while (0)
 
 
-/*----------------------------------------.
-| Print this symbol's value on YYOUTPUT.  |
-`----------------------------------------*/
+/*-----------------------------------.
+| Print this symbol's value on YYO.  |
+`-----------------------------------*/
 
 static void
-yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)
+yy_symbol_value_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep)
 {
-  FILE *yyo = yyoutput;
-  YYUSE (yyo);
+  FILE *yyoutput = yyo;
+  YYUSE (yyoutput);
   if (!yyvaluep)
     return;
 # ifdef YYPRINT
   if (yytype < YYNTOKENS)
-    YYPRINT (yyoutput, yytoknum[yytype], *yyvaluep);
+    YYPRINT (yyo, yytoknum[yytype], *yyvaluep);
 # endif
   YYUSE (yytype);
 }
 
 
-/*--------------------------------.
-| Print this symbol on YYOUTPUT.  |
-`--------------------------------*/
+/*---------------------------.
+| Print this symbol on YYO.  |
+`---------------------------*/
 
 static void
-yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)
+yy_symbol_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep)
 {
-  YYFPRINTF (yyoutput, "%s %s (",
+  YYFPRINTF (yyo, "%s %s (",
              yytype < YYNTOKENS ? "token" : "nterm", yytname[yytype]);
 
-  yy_symbol_value_print (yyoutput, yytype, yyvaluep);
-  YYFPRINTF (yyoutput, ")");
+  yy_symbol_value_print (yyo, yytype, yyvaluep);
+  YYFPRINTF (yyo, ")");
 }
 
 /*------------------------------------------------------------------.
@@ -834,7 +830,7 @@ do {                                                            \
 static void
 yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, int yyrule)
 {
-  unsigned long int yylno = yyrline[yyrule];
+  unsigned long yylno = yyrline[yyrule];
   int yynrhs = yyr2[yyrule];
   int yyi;
   YYFPRINTF (stderr, "Reducing stack by rule %d (line %lu):\n",
@@ -845,7 +841,7 @@ yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, int yyrule)
       YYFPRINTF (stderr, "   $%d = ", yyi + 1);
       yy_symbol_print (stderr,
                        yystos[yyssp[yyi + 1 - yynrhs]],
-                       &(yyvsp[(yyi + 1) - (yynrhs)])
+                       &yyvsp[(yyi + 1) - (yynrhs)]
                                               );
       YYFPRINTF (stderr, "\n");
     }
@@ -949,7 +945,10 @@ yytnamerr (char *yyres, const char *yystr)
           case '\\':
             if (*++yyp != '\\')
               goto do_not_strip_quotes;
-            /* Fall through.  */
+            else
+              goto append;
+
+          append:
           default:
             if (yyres)
               yyres[yyn] = *yyp;
@@ -967,7 +966,7 @@ yytnamerr (char *yyres, const char *yystr)
   if (! yyres)
     return yystrlen (yystr);
 
-  return yystpcpy (yyres, yystr) - yyres;
+  return (YYSIZE_T) (yystpcpy (yyres, yystr) - yyres);
 }
 # endif
 
@@ -1045,10 +1044,10 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
                 yyarg[yycount++] = yytname[yyx];
                 {
                   YYSIZE_T yysize1 = yysize + yytnamerr (YY_NULLPTR, yytname[yyx]);
-                  if (! (yysize <= yysize1
-                         && yysize1 <= YYSTACK_ALLOC_MAXIMUM))
+                  if (yysize <= yysize1 && yysize1 <= YYSTACK_ALLOC_MAXIMUM)
+                    yysize = yysize1;
+                  else
                     return 2;
-                  yysize = yysize1;
                 }
               }
         }
@@ -1060,6 +1059,7 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
       case N:                               \
         yyformat = S;                       \
       break
+    default: /* Avoid compiler warnings. */
       YYCASE_(0, YY_("syntax error"));
       YYCASE_(1, YY_("syntax error, unexpected %s"));
       YYCASE_(2, YY_("syntax error, unexpected %s, expecting %s"));
@@ -1071,9 +1071,10 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
 
   {
     YYSIZE_T yysize1 = yysize + yystrlen (yyformat);
-    if (! (yysize <= yysize1 && yysize1 <= YYSTACK_ALLOC_MAXIMUM))
+    if (yysize <= yysize1 && yysize1 <= YYSTACK_ALLOC_MAXIMUM)
+      yysize = yysize1;
+    else
       return 2;
-    yysize = yysize1;
   }
 
   if (*yymsg_alloc < yysize)
@@ -1199,23 +1200,31 @@ yyparse (void)
   yychar = YYEMPTY; /* Cause a token to be read.  */
   goto yysetstate;
 
+
 /*------------------------------------------------------------.
-| yynewstate -- Push a new state, which is found in yystate.  |
+| yynewstate -- push a new state, which is found in yystate.  |
 `------------------------------------------------------------*/
- yynewstate:
+yynewstate:
   /* In all cases, when you get here, the value and location stacks
      have just been pushed.  So pushing a state here evens the stacks.  */
   yyssp++;
 
- yysetstate:
-  *yyssp = yystate;
+
+/*--------------------------------------------------------------------.
+| yynewstate -- set current state (the top of the stack) to yystate.  |
+`--------------------------------------------------------------------*/
+yysetstate:
+  *yyssp = (yytype_int16) yystate;
 
   if (yyss + yystacksize - 1 <= yyssp)
+#if !defined yyoverflow && !defined YYSTACK_RELOCATE
+    goto yyexhaustedlab;
+#else
     {
       /* Get the current used size of the three stacks, in elements.  */
-      YYSIZE_T yysize = yyssp - yyss + 1;
+      YYSIZE_T yysize = (YYSIZE_T) (yyssp - yyss + 1);
 
-#ifdef yyoverflow
+# if defined yyoverflow
       {
         /* Give user a chance to reallocate the stack.  Use copies of
            these so that the &'s don't force the real ones into
@@ -1231,14 +1240,10 @@ yyparse (void)
                     &yyss1, yysize * sizeof (*yyssp),
                     &yyvs1, yysize * sizeof (*yyvsp),
                     &yystacksize);
-
         yyss = yyss1;
         yyvs = yyvs1;
       }
-#else /* no yyoverflow */
-# ifndef YYSTACK_RELOCATE
-      goto yyexhaustedlab;
-# else
+# else /* defined YYSTACK_RELOCATE */
       /* Extend the stack our own way.  */
       if (YYMAXDEPTH <= yystacksize)
         goto yyexhaustedlab;
@@ -1254,22 +1259,22 @@ yyparse (void)
           goto yyexhaustedlab;
         YYSTACK_RELOCATE (yyss_alloc, yyss);
         YYSTACK_RELOCATE (yyvs_alloc, yyvs);
-#  undef YYSTACK_RELOCATE
+# undef YYSTACK_RELOCATE
         if (yyss1 != yyssa)
           YYSTACK_FREE (yyss1);
       }
 # endif
-#endif /* no yyoverflow */
 
       yyssp = yyss + yysize - 1;
       yyvsp = yyvs + yysize - 1;
 
       YYDPRINTF ((stderr, "Stack size increased to %lu\n",
-                  (unsigned long int) yystacksize));
+                  (unsigned long) yystacksize));
 
       if (yyss + yystacksize - 1 <= yyssp)
         YYABORT;
     }
+#endif /* !defined yyoverflow && !defined YYSTACK_RELOCATE */
 
   YYDPRINTF ((stderr, "Entering state %d\n", yystate));
 
@@ -1278,11 +1283,11 @@ yyparse (void)
 
   goto yybackup;
 
+
 /*-----------.
 | yybackup.  |
 `-----------*/
 yybackup:
-
   /* Do appropriate processing given the current state.  Read a
      lookahead token if we need one and don't already have one.  */
 
@@ -1355,7 +1360,7 @@ yydefault:
 
 
 /*-----------------------------.
-| yyreduce -- Do a reduction.  |
+| yyreduce -- do a reduction.  |
 `-----------------------------*/
 yyreduce:
   /* yyn is the number of a rule to reduce with.  */
@@ -1376,385 +1381,385 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 85 "parser.y" /* yacc.c:1646  */
+#line 85 "parser.y" /* yacc.c:1652  */
     {Root=(yyval.astree); astree_print(0, Root); SemanticErrors=semanticVerification(Root);}
-#line 1382 "y.tab.c" /* yacc.c:1646  */
+#line 1387 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 3:
-#line 88 "parser.y" /* yacc.c:1646  */
+#line 88 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_LDEC, 0, (yyvsp[-1].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1388 "y.tab.c" /* yacc.c:1646  */
+#line 1393 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 4:
-#line 89 "parser.y" /* yacc.c:1646  */
+#line 89 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=0;}
-#line 1394 "y.tab.c" /* yacc.c:1646  */
+#line 1399 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 5:
-#line 92 "parser.y" /* yacc.c:1646  */
+#line 92 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_DECVAR, (yyvsp[-3].symbol), (yyvsp[-4].astree), (yyvsp[-1].astree), 0, 0, getLineNumber());}
-#line 1400 "y.tab.c" /* yacc.c:1646  */
+#line 1405 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 6:
-#line 93 "parser.y" /* yacc.c:1646  */
+#line 93 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_DECVEC, (yyvsp[-5].symbol), (yyvsp[-6].astree), astree_create(AST_SYMBOL, (yyvsp[-3].symbol), 0, 0, 0, 0, getLineNumber()), (yyvsp[-1].astree), 0, getLineNumber());}
-#line 1406 "y.tab.c" /* yacc.c:1646  */
+#line 1411 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 7:
-#line 94 "parser.y" /* yacc.c:1646  */
+#line 94 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_DECFUNC, (yyvsp[-5].symbol), (yyvsp[-6].astree), (yyvsp[-3].astree), (yyvsp[-1].astree), 0, getLineNumber());}
-#line 1412 "y.tab.c" /* yacc.c:1646  */
+#line 1417 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 8:
-#line 97 "parser.y" /* yacc.c:1646  */
+#line 97 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_TPBYTE, 0, 0, 0, 0, 0, getLineNumber());}
-#line 1418 "y.tab.c" /* yacc.c:1646  */
+#line 1423 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 9:
-#line 98 "parser.y" /* yacc.c:1646  */
+#line 98 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_TPINT, 0, 0, 0, 0, 0, getLineNumber());}
-#line 1424 "y.tab.c" /* yacc.c:1646  */
+#line 1429 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 99 "parser.y" /* yacc.c:1646  */
+#line 99 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_TPFLOAT, 0, 0, 0, 0, 0, getLineNumber());}
-#line 1430 "y.tab.c" /* yacc.c:1646  */
+#line 1435 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 11:
-#line 102 "parser.y" /* yacc.c:1646  */
+#line 102 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_SYMBOL, (yyvsp[0].symbol), 0, 0, 0, 0, getLineNumber());}
-#line 1436 "y.tab.c" /* yacc.c:1646  */
+#line 1441 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 12:
-#line 103 "parser.y" /* yacc.c:1646  */
+#line 103 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_SYMBOL, (yyvsp[0].symbol), 0, 0, 0, 0, getLineNumber());}
-#line 1442 "y.tab.c" /* yacc.c:1646  */
+#line 1447 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 13:
-#line 104 "parser.y" /* yacc.c:1646  */
+#line 104 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_SYMBOL, (yyvsp[0].symbol), 0, 0, 0, 0, getLineNumber());}
-#line 1448 "y.tab.c" /* yacc.c:1646  */
+#line 1453 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 14:
-#line 107 "parser.y" /* yacc.c:1646  */
+#line 107 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=0;}
-#line 1454 "y.tab.c" /* yacc.c:1646  */
+#line 1459 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 15:
-#line 108 "parser.y" /* yacc.c:1646  */
+#line 108 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_VECINIT, 0, (yyvsp[-1].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1460 "y.tab.c" /* yacc.c:1646  */
+#line 1465 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 16:
-#line 111 "parser.y" /* yacc.c:1646  */
+#line 111 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=0;}
-#line 1466 "y.tab.c" /* yacc.c:1646  */
+#line 1471 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 17:
-#line 112 "parser.y" /* yacc.c:1646  */
+#line 112 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_VECELEMENTS, 0, (yyvsp[-1].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1472 "y.tab.c" /* yacc.c:1646  */
+#line 1477 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 18:
-#line 115 "parser.y" /* yacc.c:1646  */
+#line 115 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=0;}
-#line 1478 "y.tab.c" /* yacc.c:1646  */
+#line 1483 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 19:
-#line 116 "parser.y" /* yacc.c:1646  */
+#line 116 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_PARAMINIT, 0, (yyvsp[-1].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1484 "y.tab.c" /* yacc.c:1646  */
+#line 1489 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 20:
-#line 119 "parser.y" /* yacc.c:1646  */
+#line 119 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=0;}
-#line 1490 "y.tab.c" /* yacc.c:1646  */
+#line 1495 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 21:
-#line 120 "parser.y" /* yacc.c:1646  */
+#line 120 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_PARAMLST, 0, (yyvsp[-1].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1496 "y.tab.c" /* yacc.c:1646  */
+#line 1501 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 22:
-#line 123 "parser.y" /* yacc.c:1646  */
+#line 123 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_PARAM, (yyvsp[0].symbol), (yyvsp[-1].astree), 0, 0, 0, getLineNumber());}
-#line 1502 "y.tab.c" /* yacc.c:1646  */
+#line 1507 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 23:
-#line 126 "parser.y" /* yacc.c:1646  */
+#line 126 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_BLOCK, 0, (yyvsp[-1].astree), 0, 0, 0, getLineNumber());}
-#line 1508 "y.tab.c" /* yacc.c:1646  */
+#line 1513 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 24:
-#line 129 "parser.y" /* yacc.c:1646  */
+#line 129 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_CMDLSTINIT, 0, (yyvsp[-1].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1514 "y.tab.c" /* yacc.c:1646  */
+#line 1519 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 25:
-#line 132 "parser.y" /* yacc.c:1646  */
+#line 132 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=0;}
-#line 1520 "y.tab.c" /* yacc.c:1646  */
+#line 1525 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 26:
-#line 133 "parser.y" /* yacc.c:1646  */
+#line 133 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_CMDLST, 0, (yyvsp[-1].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1526 "y.tab.c" /* yacc.c:1646  */
+#line 1531 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 27:
-#line 136 "parser.y" /* yacc.c:1646  */
+#line 136 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=0;}
-#line 1532 "y.tab.c" /* yacc.c:1646  */
+#line 1537 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 28:
-#line 137 "parser.y" /* yacc.c:1646  */
+#line 137 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=(yyvsp[0].astree);}
-#line 1538 "y.tab.c" /* yacc.c:1646  */
+#line 1543 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 29:
-#line 138 "parser.y" /* yacc.c:1646  */
+#line 138 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_ATTR, (yyvsp[-2].symbol), (yyvsp[0].astree), 0, 0, 0, getLineNumber());}
-#line 1544 "y.tab.c" /* yacc.c:1646  */
+#line 1549 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 30:
-#line 139 "parser.y" /* yacc.c:1646  */
+#line 139 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_VECATTR, (yyvsp[-5].symbol), (yyvsp[-3].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1550 "y.tab.c" /* yacc.c:1646  */
+#line 1555 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 31:
-#line 140 "parser.y" /* yacc.c:1646  */
+#line 140 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_READ, (yyvsp[0].symbol), 0, 0, 0, 0, getLineNumber());}
-#line 1556 "y.tab.c" /* yacc.c:1646  */
+#line 1561 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 32:
-#line 141 "parser.y" /* yacc.c:1646  */
+#line 141 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_PRINT, 0, (yyvsp[0].astree), 0, 0, 0, getLineNumber());}
-#line 1562 "y.tab.c" /* yacc.c:1646  */
+#line 1567 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 33:
-#line 142 "parser.y" /* yacc.c:1646  */
+#line 142 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_RETURN, 0, (yyvsp[0].astree), 0, 0, 0, getLineNumber());}
-#line 1568 "y.tab.c" /* yacc.c:1646  */
+#line 1573 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 34:
-#line 143 "parser.y" /* yacc.c:1646  */
+#line 143 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_IF, 0, (yyvsp[-3].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1574 "y.tab.c" /* yacc.c:1646  */
+#line 1579 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 35:
-#line 144 "parser.y" /* yacc.c:1646  */
+#line 144 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_IFELSE, 0, (yyvsp[-5].astree), (yyvsp[-2].astree), (yyvsp[0].astree), 0, getLineNumber());}
-#line 1580 "y.tab.c" /* yacc.c:1646  */
+#line 1585 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 36:
-#line 145 "parser.y" /* yacc.c:1646  */
+#line 145 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_LOOP, 0, (yyvsp[-2].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1586 "y.tab.c" /* yacc.c:1646  */
+#line 1591 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 37:
-#line 146 "parser.y" /* yacc.c:1646  */
+#line 146 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_LEAP, 0, 0, 0, 0, 0, getLineNumber());}
-#line 1592 "y.tab.c" /* yacc.c:1646  */
+#line 1597 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 38:
-#line 149 "parser.y" /* yacc.c:1646  */
+#line 149 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_SYMBOL, (yyvsp[0].symbol), 0, 0, 0, 0, getLineNumber());}
-#line 1598 "y.tab.c" /* yacc.c:1646  */
+#line 1603 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 39:
-#line 150 "parser.y" /* yacc.c:1646  */
+#line 150 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_VEC, (yyvsp[-3].symbol), (yyvsp[-1].astree), 0, 0, 0, getLineNumber());}
-#line 1604 "y.tab.c" /* yacc.c:1646  */
+#line 1609 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 40:
-#line 151 "parser.y" /* yacc.c:1646  */
+#line 151 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_FUNC, (yyvsp[-3].symbol), (yyvsp[-1].astree), 0, 0, 0, getLineNumber());}
-#line 1610 "y.tab.c" /* yacc.c:1646  */
+#line 1615 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 41:
-#line 152 "parser.y" /* yacc.c:1646  */
+#line 152 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=(yyvsp[0].astree);}
-#line 1616 "y.tab.c" /* yacc.c:1646  */
+#line 1621 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 42:
-#line 153 "parser.y" /* yacc.c:1646  */
+#line 153 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_ADD, 0, (yyvsp[-2].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1622 "y.tab.c" /* yacc.c:1646  */
+#line 1627 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 43:
-#line 154 "parser.y" /* yacc.c:1646  */
+#line 154 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_SUB, 0, (yyvsp[-2].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1628 "y.tab.c" /* yacc.c:1646  */
+#line 1633 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 44:
-#line 155 "parser.y" /* yacc.c:1646  */
+#line 155 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_MUL, 0, (yyvsp[-2].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1634 "y.tab.c" /* yacc.c:1646  */
+#line 1639 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 45:
-#line 156 "parser.y" /* yacc.c:1646  */
+#line 156 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_DIV, 0, (yyvsp[-2].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1640 "y.tab.c" /* yacc.c:1646  */
+#line 1645 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 46:
-#line 157 "parser.y" /* yacc.c:1646  */
+#line 157 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_LESS, 0, (yyvsp[-2].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1646 "y.tab.c" /* yacc.c:1646  */
+#line 1651 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 47:
-#line 158 "parser.y" /* yacc.c:1646  */
+#line 158 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_GREAT, 0, (yyvsp[-2].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1652 "y.tab.c" /* yacc.c:1646  */
+#line 1657 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 48:
-#line 159 "parser.y" /* yacc.c:1646  */
+#line 159 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_EQ, 0, (yyvsp[-2].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1658 "y.tab.c" /* yacc.c:1646  */
+#line 1663 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 49:
-#line 160 "parser.y" /* yacc.c:1646  */
+#line 160 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_GE, 0, (yyvsp[-2].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1664 "y.tab.c" /* yacc.c:1646  */
+#line 1669 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 50:
-#line 161 "parser.y" /* yacc.c:1646  */
+#line 161 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_LE, 0, (yyvsp[-2].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1670 "y.tab.c" /* yacc.c:1646  */
+#line 1675 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 51:
-#line 162 "parser.y" /* yacc.c:1646  */
+#line 162 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_DIF, 0, (yyvsp[-2].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1676 "y.tab.c" /* yacc.c:1646  */
+#line 1681 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 52:
-#line 163 "parser.y" /* yacc.c:1646  */
+#line 163 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_AND, 0, (yyvsp[-2].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1682 "y.tab.c" /* yacc.c:1646  */
+#line 1687 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 53:
-#line 164 "parser.y" /* yacc.c:1646  */
+#line 164 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_OR, 0, (yyvsp[-2].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1688 "y.tab.c" /* yacc.c:1646  */
+#line 1693 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 54:
-#line 165 "parser.y" /* yacc.c:1646  */
+#line 165 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_NOT, 0, (yyvsp[0].astree), 0, 0, 0, getLineNumber());}
-#line 1694 "y.tab.c" /* yacc.c:1646  */
+#line 1699 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 55:
-#line 166 "parser.y" /* yacc.c:1646  */
+#line 166 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_PAREN, 0, (yyvsp[-1].astree), 0, 0, 0, getLineNumber());}
-#line 1700 "y.tab.c" /* yacc.c:1646  */
+#line 1705 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 56:
-#line 169 "parser.y" /* yacc.c:1646  */
+#line 169 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=0;}
-#line 1706 "y.tab.c" /* yacc.c:1646  */
+#line 1711 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 57:
-#line 170 "parser.y" /* yacc.c:1646  */
+#line 170 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_ARGLSTINIT, 0, (yyvsp[-1].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1712 "y.tab.c" /* yacc.c:1646  */
+#line 1717 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 58:
-#line 173 "parser.y" /* yacc.c:1646  */
+#line 173 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=0;}
-#line 1718 "y.tab.c" /* yacc.c:1646  */
+#line 1723 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 59:
-#line 174 "parser.y" /* yacc.c:1646  */
+#line 174 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_ARGLST, 0, (yyvsp[-1].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1724 "y.tab.c" /* yacc.c:1646  */
+#line 1729 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 60:
-#line 177 "parser.y" /* yacc.c:1646  */
+#line 177 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_PRINTLSTINIT, 0, (yyvsp[-1].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1730 "y.tab.c" /* yacc.c:1646  */
+#line 1735 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 61:
-#line 180 "parser.y" /* yacc.c:1646  */
+#line 180 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=0;}
-#line 1736 "y.tab.c" /* yacc.c:1646  */
+#line 1741 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 62:
-#line 181 "parser.y" /* yacc.c:1646  */
+#line 181 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_PRINTLST, 0, (yyvsp[-1].astree), (yyvsp[0].astree), 0, 0, getLineNumber());}
-#line 1742 "y.tab.c" /* yacc.c:1646  */
+#line 1747 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 63:
-#line 184 "parser.y" /* yacc.c:1646  */
+#line 184 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=astree_create(AST_SYMBOL, (yyvsp[0].symbol), 0, 0, 0, 0, getLineNumber());}
-#line 1748 "y.tab.c" /* yacc.c:1646  */
+#line 1753 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 64:
-#line 185 "parser.y" /* yacc.c:1646  */
+#line 185 "parser.y" /* yacc.c:1652  */
     {(yyval.astree)=(yyvsp[0].astree);}
-#line 1754 "y.tab.c" /* yacc.c:1646  */
+#line 1759 "y.tab.c" /* yacc.c:1652  */
     break;
 
 
-#line 1758 "y.tab.c" /* yacc.c:1646  */
+#line 1763 "y.tab.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1779,14 +1784,13 @@ yyreduce:
   /* Now 'shift' the result of the reduction.  Determine what state
      that goes to, based on the state we popped back to and the rule
      number reduced by.  */
-
-  yyn = yyr1[yyn];
-
-  yystate = yypgoto[yyn - YYNTOKENS] + *yyssp;
-  if (0 <= yystate && yystate <= YYLAST && yycheck[yystate] == *yyssp)
-    yystate = yytable[yystate];
-  else
-    yystate = yydefgoto[yyn - YYNTOKENS];
+  {
+    const int yylhs = yyr1[yyn] - YYNTOKENS;
+    const int yyi = yypgoto[yylhs] + *yyssp;
+    yystate = (0 <= yyi && yyi <= YYLAST && yycheck[yyi] == *yyssp
+               ? yytable[yyi]
+               : yydefgoto[yylhs]);
+  }
 
   goto yynewstate;
 
@@ -1869,12 +1873,10 @@ yyerrlab:
 | yyerrorlab -- error raised explicitly by YYERROR.  |
 `---------------------------------------------------*/
 yyerrorlab:
-
-  /* Pacify compilers like GCC when the user code never invokes
-     YYERROR and the label yyerrorlab therefore never appears in user
-     code.  */
-  if (/*CONSTCOND*/ 0)
-     goto yyerrorlab;
+  /* Pacify compilers when the user code never invokes YYERROR and the
+     label yyerrorlab therefore never appears in user code.  */
+  if (0)
+    YYERROR;
 
   /* Do not reclaim the symbols of the rule whose action triggered
      this YYERROR.  */
@@ -1936,12 +1938,14 @@ yyacceptlab:
   yyresult = 0;
   goto yyreturn;
 
+
 /*-----------------------------------.
 | yyabortlab -- YYABORT comes here.  |
 `-----------------------------------*/
 yyabortlab:
   yyresult = 1;
   goto yyreturn;
+
 
 #if !defined yyoverflow || YYERROR_VERBOSE
 /*-------------------------------------------------.
@@ -1953,6 +1957,10 @@ yyexhaustedlab:
   /* Fall through.  */
 #endif
 
+
+/*-----------------------------------------------------.
+| yyreturn -- parsing is finished, return the result.  |
+`-----------------------------------------------------*/
 yyreturn:
   if (yychar != YYEMPTY)
     {
@@ -1982,7 +1990,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 188 "parser.y" /* yacc.c:1906  */
+#line 188 "parser.y" /* yacc.c:1918  */
 
 
 void checkSemantic(){

@@ -47,4 +47,7 @@ void hashPrint(void);
 
 int hashCheckUndeclared();
 
+hash_node * makeTemp();
+hash_node * makeLabel();
+
 #endif
