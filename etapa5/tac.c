@@ -177,9 +177,9 @@ tac* createIf(tac* sons[]){
 tac* createLoop(tac* sons[], hash_node *whileLabel){
 	hash_node* jumpLabel = makeLabel();
 
-	tac* whileTac = newTac(TAC_IFZ, whileLabel, sons[0]?sons[0]->res:0, 0);
+	tac* whileTac = newTac(TAC_IFZ, jumpLabel, sons[0]?sons[0]->res:0, 0);
 	tac* whileLabelTac = newTac(TAC_LABEL, whileLabel, 0, 0);
-	tac* jumpTac = newTac(TAC_JUMP, jumpLabel, 0, 0);
+	tac* jumpTac = newTac(TAC_JUMP, whileLabel, 0, 0);
 	tac* jumpLabelTac= newTac(TAC_LABEL, jumpLabel, 0, 0);
 
 	return tacJoin(tacJoin(tacJoin(tacJoin(tacJoin(whileLabelTac, sons[0]), whileTac), sons[1]), jumpTac), jumpLabelTac);
