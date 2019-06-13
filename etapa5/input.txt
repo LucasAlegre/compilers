@@ -18,6 +18,14 @@ byte b[A]: A;
 
 byte main ()
   {
+
+    loop(A == A){
+      leap;
+      loop(A == A){
+        leap;
+      }
+    };
+
   b[O] = A;
   a = C;
   v[a] = AO;

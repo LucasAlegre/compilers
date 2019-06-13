@@ -24,7 +24,7 @@
 #define TAC_NOT 14
 #define TAC_LABEL 15
 #define TAC_BEGINFUN 16
-#define TAC_ADDPARAM 17
+#define TAC_ARGPUSH 17
 #define TAC_ENDFUN 18
 #define TAC_IFZ 19
 #define TAC_JUMP 20
@@ -33,6 +33,8 @@
 #define TAC_RET 23
 #define TAC_PRINT 24
 #define TAC_READ 25
+#define TAC_VECATTR 26
+#define TAC_VEC 27
 
 typedef struct tac_struct{
 	int type;
@@ -48,10 +50,12 @@ tac* tacJoin(tac* l1, tac* l2);
 void printAllTacs(tac* l);
 tac* rewindTac(tac* l);
 void printTac(tac* l);
-tac* createTacs(astree_node * node);
+tac* createTacs(astree_node *node, hash_node *currentLoopLabel);
 
 tac* createBinop(int type, tac* sons[]);
 tac* createIf(tac* sons[]);
-tac* createLoop(tac* sons[]);
+tac* createLoop(tac* sons[], hash_node *label);
+tac* createLeap(tac* sons[], hash_node *currentLoopLabel);
+tac* createFunction(tac* symbol, tac* params, tac* code);
 
 #endif
