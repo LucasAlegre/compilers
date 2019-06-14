@@ -22,13 +22,13 @@ byte main ()
     loop(A == A){
       leap;
       loop(A == A){
-        leap;
+        read c;
       }
     };
 
   b[O] = A;
   a = C;
-  v[a] = AO;
+  v[a+C] = AO + AB;
   print v[a],"oie";
   
   print "Digite um numero: \n";
@@ -40,7 +40,7 @@ byte main ()
     if (not (A+a) > (1+v[A])) then {leap};
     };
 
-  print "Incrementado algumas vezes fica ",a,"\n";
+  print "Incrementado algumas vezes fica ",a+C,"\n";
 
   if (a==E) then 
     print "Parou no meio\n";
@@ -59,6 +59,11 @@ byte main ()
 
 byte incn ( byte x, byte n )
   {
+
+    if(A == A) then {
+      a = B;
+    }else a = A;
+
   a = incn(A, A);
   a = incn(A, A);
   return (x*n / A) * O;

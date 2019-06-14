@@ -35,6 +35,7 @@
 #define TAC_READ 25
 #define TAC_VECATTR 26
 #define TAC_VEC 27
+#define TAC_PARAMPOP 28
 
 typedef struct tac_struct{
 	int type;

@@ -77,6 +77,8 @@ void printTac(tac* l){
 		case TAC_READ: fprintf(stderr, "READ(");break;
 		case TAC_VECATTR: fprintf(stderr, "VECATTR(");break;
 		case TAC_VEC: fprintf(stderr, "VEC(");break;
+		case TAC_PARAMPOP: fprintf(stderr, "PARAMPOP(");break;
+
 
 		default: fprintf(stderr, "UNKNOWN TAC TYPE!(");break;
 	}
@@ -128,10 +130,10 @@ tac* createTacs(astree_node *node, hash_node *currentLoopLabel){
 
 		//Commands
 		case AST_ATTR: return tacJoin(sons[0], newTac(TAC_MOVE, node->symbol, sons[0]?sons[0]->res:0, 0));
-		case AST_VECATTR: return tacJoin(sons[1], newTac(TAC_VECATTR, node->symbol, sons[0]?sons[0]->res:0, sons[1]?sons[1]->res:0)); 
+		case AST_VECATTR: return tacJoin(sons[0], tacJoin(sons[1], newTac(TAC_VECATTR, node->symbol, sons[0]?sons[0]->res:0, sons[1]?sons[1]->res:0))); 
 		case AST_READ: return newTac(TAC_READ, node->symbol, 0, 0);
 		case AST_PRINTLSTINIT:
-		case AST_PRINTLST: return tacJoin(newTac(TAC_PRINT, sons[0]?sons[0]->res:0, 0, 0), sons[1]);
+		case AST_PRINTLST: return tacJoin(tacJoin(sons[0], newTac(TAC_PRINT, sons[0]?sons[0]->res:0, 0, 0)), sons[1]);
 		case AST_RETURN: return tacJoin(sons[0], newTac(TAC_RET, makeTemp(), sons[0]?sons[0]->res:0, 0));
 		case AST_IFELSE:
 		case AST_IF: return createIf(sons);
@@ -141,10 +143,11 @@ tac* createTacs(astree_node *node, hash_node *currentLoopLabel){
 		///TODO: FUNCTIONS, PARAMETERS, ARGUMENTS AND VECTORS
 		case AST_FUNC: return tacJoin(sons[0], newTac(TAC_CALL, makeTemp(), node->symbol, 0));
 		case AST_ARGLSTINIT:
-		case AST_ARGLST: return tacJoin(sons[1], newTac(TAC_ARGPUSH, sons[0]?sons[0]->res:0, 0, 0));
-		case AST_VEC: return newTac(TAC_VEC, makeTemp(), node->symbol, sons[0]?sons[0]->res:0);
+		case AST_ARGLST: return tacJoin(sons[1], tacJoin(sons[0], newTac(TAC_ARGPUSH, sons[0]?sons[0]->res:0, 0, 0)));
+		case AST_VEC: return tacJoin(sons[0], newTac(TAC_VEC, makeTemp(), node->symbol, sons[0]?sons[0]->res:0));
 
 		case AST_DECFUNC: return createFunction(newTac(TAC_SYMBOL, node->symbol, 0, 0), sons[1], sons[2]);
+		case AST_PARAM: return tacJoin(newTac(TAC_PARAMPOP, node->symbol, 0, 0), sons[1]);
 
 		default: return tacJoin(tacJoin(tacJoin(sons[0], sons[1]), sons[2]), sons[3]);
 	}
