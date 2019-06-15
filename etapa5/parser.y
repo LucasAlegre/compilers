@@ -83,7 +83,7 @@
 
 %%
 
-program : l_declarations                                                  {Root=$$; astree_print(0, Root); SemanticErrors=semanticVerification(Root); printAllTacs(rewindTac(createTacs(Root, 0)));}
+program : l_declarations                                                  {Root=$$; astree_print(0, Root); SemanticErrors=semanticVerification(Root);}
     		;
 
 l_declarations : declaration l_declarations                               {$$=astree_create(AST_LDEC, 0, $1, $2, 0, 0, getLineNumber());}
@@ -203,4 +203,8 @@ int yyerror(char *err){
 
 astree_node* getAST(){
 	return Root;
+}
+
+tac* getTACs(){
+  return rewindTac(createTacs(Root, 0));
 }

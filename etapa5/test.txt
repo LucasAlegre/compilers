@@ -9,10 +9,14 @@ int main(){
 	} else {
 		read a;
 	};
-
+    return A;
 	loop(a < b){
 		read a;
 	};
 
 	return O;
+};
+
+int teste(){
+    return A+A;
 };

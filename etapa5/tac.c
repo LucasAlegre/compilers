@@ -3,7 +3,6 @@
 	Alunos:
 		Guilherme Haetinger e Lucas Alegre 
 */
-
 #include "tac.h"
 #include "hash.h"
 #include "stdlib.h"
@@ -33,7 +32,7 @@ tac* tacJoin(tac* l1, tac* l2){
 
 void printAllTacs(tac* l){
 	tac* t;
-	for(t = l; t->next; t = t->next)
+	for(t = l; t; t = t->next)
 		printTac(t);	
 }
 
@@ -78,7 +77,6 @@ void printTac(tac* l){
 		case TAC_VECATTR: fprintf(stderr, "VECATTR(");break;
 		case TAC_VEC: fprintf(stderr, "VEC(");break;
 		case TAC_PARAMPOP: fprintf(stderr, "PARAMPOP(");break;
-
 
 		default: fprintf(stderr, "UNKNOWN TAC TYPE!(");break;
 	}
@@ -134,7 +132,7 @@ tac* createTacs(astree_node *node, hash_node *currentLoopLabel){
 		case AST_READ: return newTac(TAC_READ, node->symbol, 0, 0);
 		case AST_PRINTLSTINIT:
 		case AST_PRINTLST: return tacJoin(tacJoin(sons[0], newTac(TAC_PRINT, sons[0]?sons[0]->res:0, 0, 0)), sons[1]);
-		case AST_RETURN: return tacJoin(sons[0], newTac(TAC_RET, makeTemp(), sons[0]?sons[0]->res:0, 0));
+		case AST_RETURN: return tacJoin(sons[0], newTac(TAC_RET, sons[0]?sons[0]->res:0, 0, 0));
 		case AST_IFELSE:
 		case AST_IF: return createIf(sons);
 		case AST_LOOP: return createLoop(sons, currentLoopLabel);
@@ -194,5 +192,5 @@ tac* createLeap(tac* sons[], hash_node *currentLoopLabel){
 }
 
 tac* createFunction(tac* symbol, tac* params, tac* code){
-	return tacJoin(tacJoin(tacJoin( newTac(TAC_BEGINFUN, symbol->res, 0, 0), params), code), newTac(TAC_ENDFUN, symbol->res, 0, 0));
+	return tacJoin(tacJoin(tacJoin(newTac(TAC_BEGINFUN, symbol->res, 0, 0), params), code), newTac(TAC_ENDFUN, symbol->res, 0, 0));
 }

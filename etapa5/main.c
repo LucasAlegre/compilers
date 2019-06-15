@@ -1,12 +1,12 @@
 /*
-	ETAPA 4 - Compiladores - 2019/1 Turma A - Prof. Marcelo Johann
+	ETAPA 5 - Compiladores - 2019/1 Turma A - Prof. Marcelo Johann
 	Alunos:
 		Guilherme Haetinger e Lucas Alegre
 */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "astree.h"
+#include "tac.h"
 
 extern FILE* yyin;
 extern FILE* file();
@@ -16,6 +16,7 @@ extern int yyparse();
 extern void initMe();
 extern void hashPrint();
 extern astree_node * getAST();
+extern tac * getTACs();
 extern int checkSemantic();
 
 int main(int argc, char *argv[]){
@@ -24,7 +25,7 @@ int main(int argc, char *argv[]){
 	FILE *out;
 
 	if(argc < 3){
-		fprintf(stderr,"Call: ./etapa4 input.txt output.txt\n");
+		fprintf(stderr,"Call: ./etapa5 input.txt output.txt\n");
 		return 1;
 	}
 	if(!(file(argv[1]))){
@@ -42,13 +43,15 @@ int main(int argc, char *argv[]){
 	//hashPrint();
 	fprintf(stderr, "Compiled AST Successfully.\n");
 
-	fprintf(stderr, "Uncompiling AST.\n");
+	fprintf(stderr, "Uncompiling AST.\n\n");
 	uncompileAST(getAST(), out);
 	fclose(out);
 
 	checkSemantic();
+	fprintf(stderr, "No Semantic Errors.\n\n");
 
-	fprintf(stderr, "No Semantic Errors.\n");
+	fprintf(stderr, "Generating TACs:\n\n");
+	printAllTacs(getTACs());
 
 	return 0;
 }
