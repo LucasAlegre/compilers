@@ -290,23 +290,25 @@ int getNumberOfArguments(astree_node * node){
 }
 
 void compareCalledArguments(astree_node *node, astree_node *declaration){
-	if(node->sons[0] != NULL){
-		if(!isDatatypeCompatible(node->sons[0]->datatype, declaration->sons[0]->symbol->datatype)){
-			fprintf(stderr, "Semantic ERROR in line %d: Incompatible argument types\n", node->lineNumber);
-			SemanticErrors++;
+	if(node != NULL){
+		if(node->sons[0] != NULL){
+			if(!isDatatypeCompatible(node->sons[0]->datatype, declaration->sons[0]->symbol->datatype)){
+				fprintf(stderr, "Semantic ERROR in line %d: Incompatible argument types\n", node->lineNumber);
+				SemanticErrors++;
+			}
+					if(node->sons[0]->type == AST_SYMBOL){
+							if(node->sons[0]->symbol->type == SYMBOL_FUNC){
+									fprintf(stderr, "Semantic ERROR in line %d: Cannot pass function as argument\n", node->lineNumber);
+						SemanticErrors++;
+							}
+							else if(node->sons[0]->symbol->type == SYMBOL_VEC){
+									fprintf(stderr, "Semantic ERROR in line %d: Cannot pass vector as argument\n", node->lineNumber);
+						SemanticErrors++;
+							}
+					}
+			if(node->sons[1] != NULL)
+				compareCalledArguments(node->sons[1], declaration->sons[1]);
 		}
-        if(node->sons[0]->type == AST_SYMBOL){
-            if(node->sons[0]->symbol->type == SYMBOL_FUNC){
-                fprintf(stderr, "Semantic ERROR in line %d: Cannot pass function as argument\n", node->lineNumber);
-			    SemanticErrors++;
-            }
-            else if(node->sons[0]->symbol->type == SYMBOL_VEC){
-                fprintf(stderr, "Semantic ERROR in line %d: Cannot pass vector as argument\n", node->lineNumber);
-			    SemanticErrors++;
-            }
-        }
-		if(node->sons[1] != NULL)
-			compareCalledArguments(node->sons[1], declaration->sons[1]);
 	}
 }
 

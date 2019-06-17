@@ -1,0 +1,14 @@
+int a = O;
+
+int dosomething(int b){
+	read a;
+	print b;	
+	return O;
+};
+
+int main(){
+	a = dosomething(a);
+	return O;
+};
+
+
