@@ -1,0 +1,12 @@
+int last = O;
+int i = O;
+int a[B] : O O;
+
+int main(){
+	loop(i < B){
+			last = a[i];
+			a[i - last] = i;
+	};
+
+	print last;
+};

@@ -1,0 +1,22 @@
+int a = O;
+int b = C;
+
+int main(){
+	a = b;
+	if(a < b) then{
+		read a;
+		print a;
+	} else {
+		read a;
+	};
+    return A;
+	loop(a < b){
+		read a;
+	};
+
+	return O;
+};
+
+int teste(){
+    return A+A;
+};

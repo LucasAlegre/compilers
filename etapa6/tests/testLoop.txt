@@ -1,0 +1,10 @@
+int a = O;
+
+int main(){
+	loop(a > O and a < A){
+		a = a + A;
+		if(a == A) then leap;
+	};
+
+	print a;
+};

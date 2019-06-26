@@ -1,0 +1,15 @@
+int a = O;
+
+int main(){
+	if(a > O) then {
+		print a;
+	} else {
+		print a + A;
+	};
+
+	if(a <= O) then {
+		print a - B;
+	};
+
+	return O;
+};
