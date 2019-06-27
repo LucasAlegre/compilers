@@ -78,8 +78,37 @@ void addImmediates(FILE* out){
 	}	
 }
 
-void addData(FILE *out){
+void addData(FILE *out, astree_node* node){
+    if(!node) return;
+	if(node->type == AST_DECVAR){
+    	fprintf(out, "\t.globl	_%s\n"
+			"\t.data\n"
+			"\t.type	_%s, @object\n"
+			"\t.size	_%s, 4\n"
+			"_%s:\n", node->symbol->text, node->symbol->text, node->symbol->text, node->symbol->text);
+		
+		/* if(var->son[0]->type == ASTREE_FLOAT || var->son[0]->type == ASTREE_DOUBLE){
+			fprintf(fout, "\t.float	%s\n", var->son[1]->symbol->text);
+		}
+		else{
+			fprintf(fout, "\t.long	%s\n", var->son[1]->symbol->text);
+		} */
+	}
+	else if(node->type == AST_DECVEC){
+        
+	}
+    else if(node->type == AST_PARAM){      		
+        
+    }
+    else if(node->type == AST_SYMBOL){
+        if(node->symbol->type == SYMBOL_LIT_STRING){
 
+        }
+    }
+    
+	for(int i = 0; i < MAX_SONS; i++){
+		addData(out, node->sons[i]);
+	}
 }
 
 void asmGenerate(tac *firstTac, astree_node* ast){
@@ -87,8 +116,7 @@ void asmGenerate(tac *firstTac, astree_node* ast){
 
     addTemporaries(out);
     addImmediates(out);
-    
-
+    addData(out, ast);
 
     for(tac* tac = firstTac; tac; tac = tac->next){
         switch (tac->type) {

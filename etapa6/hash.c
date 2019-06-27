@@ -90,7 +90,7 @@ hash_node* makeTemp(int datatype){
 	static int serialNumber = 0;
 	static char buffer[128];
 	sprintf(buffer, "_temp%d", serialNumber++);
-    hash_node *node = hashInsert(SYMBOL_IDENTIFIER, buffer);
+    hash_node *node = hashInsert(SYMBOL_VAR, buffer);
     node->datatype = datatype;
 	return node;
 }
@@ -99,5 +99,5 @@ hash_node* makeLabel(){
 	static int serialNumber = 0;
 	static char buffer[128];
 	sprintf(buffer, "_label%d", serialNumber++);
-	return hashInsert(SYMBOL_IDENTIFIER, buffer);
+	return hashInsert(SYMBOL_LABEL, buffer);
 }

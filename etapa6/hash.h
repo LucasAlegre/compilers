@@ -15,6 +15,8 @@
 #define SYMBOL_LIT_STRING 4
 #define SYMBOL_IDENTIFIER 5
 
+#define SYMBOL_LABEL 6
+
 #define SYMBOL_VAR 10
 #define SYMBOL_VEC 11
 #define SYMBOL_FUNC 12

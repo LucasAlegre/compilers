@@ -138,7 +138,6 @@ tac* createTacs(astree_node *node, hash_node *currentLoopLabel){
 		case AST_LOOP: return createLoop(sons, currentLoopLabel);
 		case AST_LEAP: return createLeap(sons, currentLoopLabel);
 		
-		///TODO: FUNCTIONS, PARAMETERS, ARGUMENTS AND VECTORS
 		case AST_FUNC: return tacJoin(sons[0], newTac(TAC_CALL, makeTemp(node->datatype), node->symbol, 0));
 		case AST_ARGLSTINIT:
 		case AST_ARGLST: return tacJoin(sons[1], tacJoin(sons[0], newTac(TAC_ARGPUSH, sons[0]?sons[0]->res:0, 0, 0)));

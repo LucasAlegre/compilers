@@ -10,7 +10,7 @@ void addTemporaries(FILE* out);
 
 void addImmediates(FILE* out);
 
-void addData(FILE* out);
+void addData(FILE* out, astree_node* node);
 
 void asmGenerate(tac *firstTac, astree_node *ast);
 
