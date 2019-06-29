@@ -1,3 +1,4 @@
+	.file	"t.c"
 	.text
 	.globl	a
 	.data
@@ -5,12 +6,12 @@
 	.type	a, @object
 	.size	a, 4
 a:
-	.long	2
+	.float	2.7
 	.section	.rodata
 .LC0:
-	.string	"%d"
+	.string	"%f\n"
 .LC1:
-	.string	"Oi"
+	.string	"aaaaaaaaaaaa"
 	.text
 	.globl	main
 	.type	main, @function
@@ -22,14 +23,13 @@ main:
 	.cfi_offset 6, -16
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
-	movl	a(%rip), %eax
-	addl	$2, %eax
-	movl	%eax, a(%rip)
-	movl	a(%rip), %eax
-	movl	%eax, %esi
+
+	movss	a(%rip), %xmm0
+	cvtss2sd	%xmm0, %xmm0
 	leaq	.LC0(%rip), %rdi
-	movl	$0, %eax
+	movl	$1, %eax
 	call	printf@PLT
+	
 	leaq	.LC1(%rip), %rdi
 	movl	$0, %eax
 	call	printf@PLT
@@ -38,3 +38,7 @@ main:
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
+.LFE0:
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0"
+	.section	.note.GNU-stack,"",@progbits

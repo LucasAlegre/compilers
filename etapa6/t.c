@@ -1,11 +1,10 @@
 #include <stdio.h>
 
-int a = 2;
+float a = 2.7;
+
 
 int main(){
-
-	a = a + 2;
-	printf("%d", a);
-	printf("Oi");
+	printf("%f\n", a);
+	printf("aaaaaaaaaaaa");
 	return 0;
 }

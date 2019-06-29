@@ -1,6 +1,7 @@
-int last = O;
+int last = I;
 int i = O;
-int a[B] : O O;
+int a[B] : O A B;
+float batata = I.B;
 
 int main(){
 	loop(i < B){
@@ -8,5 +9,5 @@ int main(){
 			a[i - last] = i;
 	};
 
-	print last;
+	print batata, "\nOI\n", last;
 };
