@@ -148,6 +148,7 @@ void addData(FILE *out, astree_node* node){
 void asmGenerate(tac *firstTac, astree_node* ast){
     FILE* out = fopen("asm.s", "w");
     int LC = 2;
+    int BL = 0;
 
     addTemporaries(out);
     addImmediates(out);
@@ -161,18 +162,80 @@ void asmGenerate(tac *firstTac, astree_node* ast){
 
     for(tac* tac = firstTac; tac; tac = tac->next){
         switch (tac->type) {
-            case TAC_PRINT:
+            case TAC_MOVE:
+              fprintf(out, "\tmovl _%s(%%rip), %%eax\n"
+                           "\tmovl %%eax, _%s(%%rip)\n", tac->op1->text, tac->res->text);
+              break;
+
+            case TAC_ADD:
+              fprintf(out, "\tmovl _%s(%%rip), %%eax\n"
+                           "\tmovl _%s(%%rip), %%edx\n"
+                           "\taddl %%eax, %%edx\n"
+                           "\tmovl %%edx, _%s(%%rip)\n", tac->op1->text, tac->op2->text, tac->res->text);
+              break;
+
+            case TAC_SUB:
+               fprintf(out, "\tmovl _%s(%%rip), %%eax\n"
+                            "\tmovl _%s(%%rip), %%edx\n"
+                            "\tsubl %%eax, %%edx\n"
+                            "\tmovl %%edx, _%s(%%rip)\n", tac->op2->text, tac->op1->text, tac->res->text);
+               break;
+
+            case TAC_MUL:
+               fprintf(out, "\tmovl _%s(%%rip), %%eax\n"
+                            "\tmovl _%s(%%rip), %%edx\n"
+                            "\timull %%eax, %%edx\n"
+                            "\tmovl %%edx, _%s(%%rip)\n", tac->op1->text, tac->op2->text, tac->res->text);
+               break;
+
+            case TAC_DIV:
+              fprintf(out, "\tmovl _%s(%%rip), %%eax\n"
+                           "\tmovl _%s(%%rip), %%ecx\n"
+                           "\txorl %%edx, %%edx\n"
+                           "\tdivl %%ecx\n"
+                           "\tmovl %%eax, _%s(%%rip)\n", tac->op1->text, tac->op2->text, tac->res->text);
+              break;
+
+            case TAC_GE:
+              fprintf(out, "\tmovl _%s(%%rip), %%eax\n"
+                           "\tmovl _%s(%%rip), %%edx\n"
+                           "\tcmpl %%eax, %%edx\n"
+                           "\tjge .BL%d\n"
+                           "\tmovl $0, %%eax\n"
+                           "\tjmp .BL%d\n"
+                           ".BL%d:\n"
+                           "\tmovl $1, %%eax\n"
+                           ".BL%d:\n"
+                      "\tmovl %%eax, _%s(%%rip)\n", tac->op1->text, tac->op2->text, BL, BL+1, BL, BL+1, tac->res->text);
+              BL+=2;
+              break;
+
+            case TAC_AND:
+                fprintf(out, "\tmovl _%s(%%rip), %%eax\n"
+                             "\tmovl _%s(%%rip), %%edx\n"
+                             "\tandl %%eax, %%edx\n"
+                             "\tjz .BL%d\n"
+                             "\tmovl $1, %%eax\n"
+                             "\tjmp .BL%d\n"
+                             ".BL%d:\n"
+                             "\tmovl $0, %%eax\n"
+                             ".BL%d:\n"
+                             "\tmovl %%eax, _%s(%%rip)\n", tac->op1->text, tac->op2->text, BL, BL+1, BL, BL+1, tac->res->text);
+                BL+=2;
+                break;
+
+             case TAC_PRINT:
                 if(tac->res->text[0] == '\"'){
                     fprintf(out, 	"\tleaq	.LC%d(%%rip), %%rdi\n"
                                     "\tmovl	$0, %%eax\n"
                                     "\tcall	printf@PLT\n", LC++);
                 }
                 else if(tac->res->datatype == DATATYPE_FLOAT) {
-                    fprintf(out,	"movss	_%s(%%rip), %%xmm0\n"
-                                    "cvtss2sd	%%xmm0, %%xmm0\n"
-                                    "leaq	.LC1(%%rip), %%rdi\n"
-                                    "movl	$1, %%eax\n"
-                                    "call	printf@PLT\n", tac->res->text);
+                    fprintf(out,	"\tmovss	_%s(%%rip), %%xmm0\n"
+                                  "\tcvtss2sd	%%xmm0, %%xmm0\n"
+                                  "\tleaq	.LC1(%%rip), %%rdi\n"
+                                  "\tmovl	$1, %%eax\n"
+                                  "\tcall	printf@PLT\n", tac->res->text);
                 }
                 else{
                     fprintf(out, 	"\tmovl	_%s(%%rip), %%eax\n"
@@ -182,28 +245,28 @@ void asmGenerate(tac *firstTac, astree_node* ast){
                                     "\tcall	printf@PLT\n", tac->res->text);
                 }
                 break;
-            
-		    case TAC_BEGINFUN: 
+
+            case TAC_BEGINFUN:
                 fprintf(out, "\t.text\n"
 						     "\t.globl %s\n"
-						     "\t.type	%s, @function\n" 
+						     "\t.type	%s, @function\n"
 						     "%s:\n"
 						     "\tpushq	%%rbp\n"
-						     "\tmovq	%%rsp, %%rbp\n",  tac->res->text, tac->res->text, tac->res->text); 
+						     "\tmovq	%%rsp, %%rbp\n",  tac->res->text, tac->res->text, tac->res->text);
                 break;
-	
-		    case TAC_ENDFUN: 
+
+		        case TAC_ENDFUN:
                 fprintf(out, "\tpopq	%%rbp\n"
 					         "\tret\n");
                 break;
 
-            case TAC_CALL: 
+            case TAC_CALL:
                 fprintf(out, "\tcall	%s\n"
 				             "\tmovl	%%eax, _%s(%%rip)\n" , tac->op1->text, tac->res->text);
                 break;
 
-		    case TAC_RET: 
-                fprintf(out, "\tmovl	_%s(%%rip), %%eax\n" , tac->op1->text); 
+		        case TAC_RET:
+                fprintf(out, "\tmovl	_%s(%%rip), %%eax\n" , tac->op1->text);
                 break;
 
             default:

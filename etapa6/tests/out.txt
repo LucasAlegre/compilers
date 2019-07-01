@@ -1,0 +1,11 @@
+int a =  O ;
+int main(){
+print  A  >=  O  and  O  >=  A ;
+print  "\n" ;
+print  A  >=  O  and  B  >=  O ;
+print  "\n" ;
+print  "\n" ;
+print  A  >=  B ;
+print  "\n" ;
+print  B  >=  B ;
+};
