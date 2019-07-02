@@ -2,21 +2,15 @@ int a = O;
 int b = C;
 
 int main(){
-	a = b;
-	if(a < b) then{
-		read a;
-		print a;
-	} else {
-		read a;
-	};
-    return A;
-	loop(a < b){
-		read a;
-	};
+	ZZ print teste(), "\n";
+	b = (O-A-H*B);
+	print b, "\n";
+	print (b)/E, "\n";
+	print (O-b)/E, "\n";
 
 	return O;
 };
 
 int teste(){
-    return A+A;
+	return A;
 };

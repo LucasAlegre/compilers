@@ -59,13 +59,13 @@ void addImmediates(FILE* out){
                              "_%s:\n", aux->text, aux->text, aux->text, aux->text);
 
                 if(aux->type == SYMBOL_LIT_FLOAT) {
-                    char *conversion = malloc(sizeof(strlen(aux->text)+1));
+                    char *conversion = calloc(strlen(aux->text)+1, sizeof(char));
                     johannNumberConversion(aux->text, conversion);
                     fprintf(out, "\t.float  %s\n", conversion);
                     free(conversion);
                 }
                 else if(aux->type == SYMBOL_LIT_INT){
-                    char *conversion = malloc(sizeof(strlen(aux->text)+1));
+                    char *conversion = calloc(strlen(aux->text)+1, sizeof(char));
                     johannNumberConversion(aux->text, conversion);
                     fprintf(out, "\t.long   %s\n", conversion);
                     free(conversion);
@@ -89,7 +89,7 @@ void addData(FILE *out, astree_node* node){
                      "\t.size	_%s, 4\n"
                      "_%s:\n", node->symbol->text, node->symbol->text, node->symbol->text, node->symbol->text);
 		
-        char *conversion = malloc(sizeof(strlen(node->sons[1]->symbol->text)+1));
+        char *conversion = calloc(strlen(node->sons[1]->symbol->text)+1, sizeof(char));
         johannNumberConversion(node->sons[1]->symbol->text, conversion);
 		if(node->sons[0]->type == AST_TPFLOAT) {
 			fprintf(out, "\t.float	%s\n", conversion);
@@ -113,7 +113,7 @@ void addData(FILE *out, astree_node* node){
 		}
     }
 	else if(node->type == AST_DECVEC){
-        char *conversion = malloc(sizeof(strlen(node->sons[1]->symbol->text)+1));
+        char *conversion = calloc(strlen(node->sons[1]->symbol->text)+1, sizeof(char));
         johannNumberConversion(node->sons[1]->symbol->text, conversion);
         fprintf(out, "\t.globl	_%s\n"
                      "\t.data\n"
@@ -122,7 +122,7 @@ void addData(FILE *out, astree_node* node){
                      "_%s:\n", node->symbol->text, node->symbol->text, node->symbol->text, 4*atoi(conversion), node->symbol->text);
         free(conversion);
         for(astree_node* aux = node->sons[2]; aux; aux = aux->sons[1]) {
-            char *conversion = malloc(sizeof(strlen(aux->sons[0]->symbol->text)+1));
+            char *conversion = calloc(strlen(aux->sons[0]->symbol->text)+1, sizeof(char));
             johannNumberConversion(aux->sons[0]->symbol->text, conversion);
             if(node->sons[0]->type == AST_TPFLOAT){
                 fprintf(out, "\t.float	%s\n", conversion);
@@ -191,8 +191,8 @@ void asmGenerate(tac *firstTac, astree_node* ast){
             case TAC_DIV:
               fprintf(out, "\tmovl _%s(%%rip), %%eax\n"
                            "\tmovl _%s(%%rip), %%ecx\n"
-                           "\txorl %%edx, %%edx\n"
-                           "\tdivl %%ecx\n"
+                           "\tcltd\n"
+                           "\tidivl %%ecx\n"
                            "\tmovl %%eax, _%s(%%rip)\n", tac->op1->text, tac->op2->text, tac->res->text);
               break;
 
@@ -206,7 +206,7 @@ void asmGenerate(tac *firstTac, astree_node* ast){
                            ".BL%d:\n"
                            "\tmovl $1, %%eax\n"
                            ".BL%d:\n"
-                      "\tmovl %%eax, _%s(%%rip)\n", tac->op1->text, tac->op2->text, BL, BL+1, BL, BL+1, tac->res->text);
+                           "\tmovl %%eax, _%s(%%rip)\n", tac->op2->text, tac->op1->text, BL, BL+1, BL, BL+1, tac->res->text);
               BL+=2;
               break;
 
@@ -224,14 +224,14 @@ void asmGenerate(tac *firstTac, astree_node* ast){
                 BL+=2;
                 break;
 
-             case TAC_PRINT:
+            case TAC_PRINT:
                 if(tac->res->text[0] == '\"'){
                     fprintf(out, 	"\tleaq	.LC%d(%%rip), %%rdi\n"
                                     "\tmovl	$0, %%eax\n"
                                     "\tcall	printf@PLT\n", LC++);
                 }
                 else if(tac->res->datatype == DATATYPE_FLOAT) {
-                    fprintf(out,	"\tmovss	_%s(%%rip), %%xmm0\n"
+                    fprintf(out,  "\tmovss	_%s(%%rip), %%xmm0\n"
                                   "\tcvtss2sd	%%xmm0, %%xmm0\n"
                                   "\tleaq	.LC1(%%rip), %%rdi\n"
                                   "\tmovl	$1, %%eax\n"
@@ -255,7 +255,7 @@ void asmGenerate(tac *firstTac, astree_node* ast){
 						     "\tmovq	%%rsp, %%rbp\n",  tac->res->text, tac->res->text, tac->res->text);
                 break;
 
-		        case TAC_ENDFUN:
+		    case TAC_ENDFUN:
                 fprintf(out, "\tpopq	%%rbp\n"
 					         "\tret\n");
                 break;
@@ -265,8 +265,8 @@ void asmGenerate(tac *firstTac, astree_node* ast){
 				             "\tmovl	%%eax, _%s(%%rip)\n" , tac->op1->text, tac->res->text);
                 break;
 
-		        case TAC_RET:
-                fprintf(out, "\tmovl	_%s(%%rip), %%eax\n" , tac->op1->text);
+		    case TAC_RET:
+                fprintf(out, "\tmovl	_%s(%%rip), %%eax\n" , tac->res->text);
                 break;
 
             default:

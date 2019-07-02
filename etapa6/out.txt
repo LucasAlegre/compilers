@@ -1,11 +1,12 @@
-int last =  I ;
-int i =  O ;
-int a[ B ]:  O   A   B  ;
-float batata =  I.B ;
+int a =  O ;
+int b =  C ;
 int main(){
-loop( i  <  B ){
-last = a[ i ];
-a[ i  -  last ] =  i ;
+b = ( O  -  A  -  H  *  B );
+print  b ,  "\n" ;
+print ( b ) /  E ,  "\n" ;
+print ( O  -  b ) /  E ,  "\n" ;
+return  O ;
 };
-print  batata ,  "\nOI\n" ,  last ;
+int teste(){
+return  A ;
 };

@@ -54,9 +54,11 @@ int main(int argc, char *argv[]){
 	fprintf(stderr, "Generating TACs:\n\n");
 	printAllTacs(getTACs());
 
-	fprintf(stderr, "\nCompiling to assembly...\n\n");
+	fprintf(stderr, "\nCompiling...\n\n");
 	asmGenerate(getTACs(), getAST());
-	fprintf(stderr, "Done.\n");
+
+	system("gcc asm.s");
+	fprintf(stderr, "Compilation complete.\n");
 
 	return 0;
 }
