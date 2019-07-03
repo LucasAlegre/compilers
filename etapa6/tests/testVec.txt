@@ -4,10 +4,11 @@ int a[B] : O A B;
 float batata = I.B;
 
 int main(){
-	loop(i < B){
-			last = a[i];
-			a[i - last] = i;
-	};
-
+	print a[I];
+	print "\n";
+	a[I] = C;
+	print "\n";
+	print a[I];
+	print "\n";
 	print batata, "\nOI\n", last;
 };

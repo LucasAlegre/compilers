@@ -1,9 +1,11 @@
 int a = O;
 
 int main(){
-	loop(a > O and a < A){
-		a = a + A;
-		if(a == A) then leap;
+	loop(a < A){
+		a = a + I;
+		print(a);
+		if(a == B) then leap;
+		print(a);
 	};
 
 	print a;

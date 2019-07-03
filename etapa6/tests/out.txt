@@ -1,11 +1,13 @@
-int a =  O ;
+int last =  I ;
+int i =  O ;
+int a[ B ]:  O   A   B  ;
+float batata =  I.B ;
 int main(){
-print  A  >=  O  and  O  >=  A ;
+print a[ I ];
 print  "\n" ;
-print  A  >=  O  and  B  >=  O ;
+a[ I ] =  C ;
 print  "\n" ;
+print a[ I ];
 print  "\n" ;
-print  A  >=  B ;
-print  "\n" ;
-print  B  >=  B ;
+print  batata ,  "\nOI\n" ,  last ;
 };
