@@ -2,14 +2,17 @@
 #	Alunos:
 #		Guilherme Haetinger e Lucas Alegre 
 
-etapa6: y.tab.o lex.yy.o hash.o astree.o semantic.o tac.o asm.o main.o
-	gcc -o etapa6 y.tab.o lex.yy.o hash.o astree.o semantic.o tac.o asm.o main.o
+etapa6: y.tab.o lex.yy.o hash.o astree.o semantic.o tac.o asm.o main.o function_hash.o
+	gcc -o etapa6 y.tab.o lex.yy.o hash.o astree.o semantic.o tac.o asm.o main.o function_hash.o
 
 main.o: main.c
 	gcc -c main.c
 
 hash.o: hash.c
 	gcc -c hash.c
+
+function_hash.o: function_hash.c
+	gcc -c function_hash.c
 
 astree.o: astree.c
 	gcc -c astree.c

@@ -1,13 +1,22 @@
-int last =  I ;
-int i =  O ;
-int a[ B ]:  O   A   B  ;
-float batata =  I.B ;
+int a =  A ;
+int c =  O ;
+int dosomething(int b){
+print  b ;
+return  O ;
+};
+int dosomething2(int s, int bc){
+print  s ;
+print  "\n" ;
+print  bc  +  I ;
+print  "\n" ;
+return  O ;
+};
 int main(){
-print a[ I ];
+a = dosomething( a );
 print  "\n" ;
-a[ I ] =  C ;
+print  a ;
+read c;
 print  "\n" ;
-print a[ I ];
-print  "\n" ;
-print  batata ,  "\nOI\n" ,  last ;
+print dosomething2( a ,  c );
+return  O ;
 };

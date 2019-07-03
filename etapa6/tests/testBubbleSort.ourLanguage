@@ -1,0 +1,43 @@
+int vec[A] : A D H B F G I C E;
+int buf = O;
+int count = O;	
+int i = O;
+int len = A;
+int dumb = O;
+
+int swap(int q, int p){
+    print q;
+    print "\n";
+  buf = vec[q];
+	vec[q] = vec[p];
+	vec[p] = buf;
+	return O;
+};
+
+
+int iterate(int size, int limit){
+  count = O;
+  loop(count < size - I - limit){
+		if(vec[count] >= vec[count + I]) then {
+			dumb = swap(count, count + I);
+		};
+		count = count + I;
+	};
+	return O;
+};
+
+int main(){
+	loop(i < len - I){
+		dumb = iterate(len, i);
+		i = i + I;
+	};
+
+  i = O;
+
+  loop(i < len - I){
+         print vec[i];
+         i = i + I;
+  };
+
+	return O;
+};

@@ -1,12 +1,22 @@
-int a =  O ;
-int b =  C ;
-int main(){
-b = ( O  -  A  -  H  *  B );
-print  b ,  "\n" ;
-print ( b ) /  E ,  "\n" ;
-print ( O  -  b ) /  E ,  "\n" ;
+int a =  A ;
+int c =  O ;
+int dosomething(int b){
+print  b ;
 return  O ;
 };
-int teste(){
-return  A ;
+int dosomething2(int s, int bc){
+print  s ;
+print  "\n" ;
+print  bc  +  I ;
+print  "\n" ;
+return  O ;
+};
+int main(){
+a = dosomething( a );
+print  "\n" ;
+print  a ;
+read c;
+print  "\n" ;
+print dosomething2( a ,  c );
+return  O ;
 };

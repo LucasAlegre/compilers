@@ -4,6 +4,7 @@
 #include "semantic.h"
 #include "astree.h"
 #include "hash.h"
+#include "function_hash.h"
 
 
 void johannNumberConversion(char* johann, char* out){
@@ -43,7 +44,7 @@ void addTemporaries(FILE* out){
                 }
 			}
 		}
-	}	
+	}
 }
 
 void addImmediates(FILE* out){
@@ -146,6 +147,15 @@ void addData(FILE *out, astree_node* node){
 }
 
 void asmGenerate(tac *firstTac, astree_node* ast){
+
+    function_hashInit();
+    char * function_name = NULL;
+    int arg_index = 0;
+    function_hash_node * node = NULL;
+    function_argument * argument = NULL;
+    char * argumentBuffer[100];
+
+
     FILE* out = fopen("asm.s", "w");
     int LC = 2;
     int BL = 0;
@@ -361,6 +371,10 @@ void asmGenerate(tac *firstTac, astree_node* ast){
                 break;
 
             case TAC_BEGINFUN:
+                function_hashInsert(tac->res->text);
+                if(function_name != NULL) free(function_name);
+                function_name = (char*) calloc(1, sizeof(tac->res->text));
+                strcpy(function_name, tac->res->text);
                 fprintf(out, "\t.text\n"
 						     "\t.globl %s\n"
 						     "\t.type	%s, @function\n"
@@ -368,6 +382,18 @@ void asmGenerate(tac *firstTac, astree_node* ast){
 						     "\tpushq	%%rbp\n"
 						     "\tmovq	%%rsp, %%rbp\n",  tac->res->text, tac->res->text, tac->res->text);
                 break;
+
+        case TAC_PARAMPOP:
+          node = getNode(function_name);
+          addNewArgument(tac->res->text, node);
+          break;
+
+        case TAC_ARGPUSH:
+
+          argumentBuffer[arg_index] = (char*) calloc(1, sizeof(tac->res->text));
+          strcpy(argumentBuffer[arg_index], tac->res->text);
+          arg_index++;
+          break;
 
         case TAC_VEC:
           fprintf(out, "\tmovl _%s(%%rip), %%eax\n"
@@ -389,11 +415,24 @@ void asmGenerate(tac *firstTac, astree_node* ast){
                 break;
 
             case TAC_CALL:
-                fprintf(out, "\tcall	%s\n"
+              if(function_name != NULL) free(function_name);
+              function_name = (char*) calloc(1, sizeof(tac->op1->text));
+              strcpy(function_name, tac->op1->text);
+              function_argument * arg = getNode(function_name)->first_argument;
+              for(int i = arg_index - 1; i >= 0 && arg != NULL; i--, arg = arg->next){
+              fprintf(out, "\tmovl _%s(%%rip), %%eax\n"
+                        "\tmovl %%eax, _%s(%%rip)\n", argumentBuffer[i], arg->name);
+              }
+              fprintf(out, "\tcall	%s\n"
 				             "\tmovl	%%eax, _%s(%%rip)\n" , tac->op1->text, tac->res->text);
-                break;
+              arg_index = 0;
+              break;
+        case TAC_READ: fprintf(out, "\tmovl	$_%s, %%esi\n"
+                                "\tmovl	$.LC0, %%edi\n"
+                                "\tcall	__isoc99_scanf\n", tac->res->text);
+            break;
 
-		    case TAC_RET:
+        case TAC_RET:
                 fprintf(out, "\tmovl	_%s(%%rip), %%eax\n" , tac->res->text);
                 break;
 
