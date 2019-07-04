@@ -171,7 +171,7 @@ void asmGenerate(tac *firstTac, astree_node* ast){
     addData(out, ast);
 
     for(tac* tac = firstTac; tac; tac = tac->next){
-        switch (tac->type) {
+				switch (tac->type) {
             case TAC_MOVE:
               fprintf(out, "\tmovl _%s(%%rip), %%eax\n"
                            "\tmovl %%eax, _%s(%%rip)\n", tac->op1->text, tac->res->text);

@@ -57,7 +57,7 @@ int main(int argc, char *argv[]){
 	fprintf(stderr, "\nCompiling...\n\n");
 	asmGenerate(getTACs(), getAST());
 
-	system("gcc asm.s");
+	system("gcc -fno-pie -no-pie asm.s");
 	fprintf(stderr, "Compilation complete.\n");
 
 	return 0;

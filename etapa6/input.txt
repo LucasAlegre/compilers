@@ -16,6 +16,19 @@ float f = IO.EE;
 byte c = 'x';
 byte b[A]: A;
 
+byte incn ( byte x, byte n )
+  {
+
+    if(A == A) then {
+      a = B;
+    }else a = A;
+
+  a = incn(A, A);
+  a = incn(A, A);
+  return (x*n / A) * O;
+  return A / I
+};
+
 byte main ()
   {
 
@@ -55,19 +68,6 @@ byte main ()
   ;;;
   {;};
   {};
-  };
-
-byte incn ( byte x, byte n )
-  {
-
-    if(A == A) then {
-      a = B;
-    }else a = A;
-
-  a = incn(A, A);
-  a = incn(A, A);
-  return (x*n / A) * O;
-  return A / I
   };
 
 
