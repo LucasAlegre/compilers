@@ -149,7 +149,7 @@ void checkUsage(astree_node *node){
     if(node == NULL) return;
 	switch (node->type){
         case AST_ATTR:
-            if(node->symbol->type != SYMBOL_VAR){
+            if(node->symbol->type != SYMBOL_VAR && node->symbol->type != SYMBOL_PARAM){
                 fprintf(stderr, "Semantic ERROR in line %d: Attribution must be to a scalar variable.\n", node->lineNumber);
                 SemanticErrors++;
             }

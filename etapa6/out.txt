@@ -1,60 +1,54 @@
-byte a =  O ;
-int 1 =  'c' ;
-int v[ IO ];
-float v2[ AC ]:  I.I  ;
-int mat[ IO ];
-float f =  IO.EE ;
-byte c =  'x' ;
-byte b[ A ]:  A  ;
-byte incn(byte x, byte n){
-if( A  ==  A ) then 
-{
-a =  B ;
-}else
-a =  A ;
-a = incn( A ,  A );
-a = incn( A ,  A );
-return ( x  *  n  /  A ) *  O ;
-return  A  /  I };
-byte main(){
-loop( A  ==  A ){
-leap;
-loop( A  ==  A ){
-read c;
-}};
-b[ O ] =  A ;
-a =  C ;
-v[ a  +  C ] =  AO  +  AB ;
-print v[ a ],  "oie" ;
-print  "Digite um numero: \n" ;
+int op =  O ;
+int a =  O ;
+int b =  O ;
+int i =  O ;
+int tmp =  O ;
+int add(int x, int y){
+return  x  +  y ;
+};
+int div(int c, int d){
+return  c  /  d ;
+};
+int mul(int e, int f){
+return  e  *  f ;
+};
+int sub(int g, int h){
+return  g  -  h ;
+};
+int fat(int z){
+tmp =  z ;
+loop( tmp  !=  I ){
+tmp =  tmp  -  I ;
+z =  z  *  tmp ;
+};
+return  z ;
+};
+int main(){
+loop( I  ==  I ){
 read a;
-loop(( 1  <  IO ) and  A  == (v2[ A ])){
-1 = incn(incn( a ,  a ),  I );
-a = incn( a ,  A );
-if(not ( A  +  a ) > ( 1  + v[ A ])) then 
+read b;
+read op;
+if( op  ==  O ) then 
 {
-leap};
+print add( a ,  b );
 };
-print  "Incrementado algumas vezes fica " ,  a  +  C ,  "\n" ;
-if( a  ==  E ) then 
-print  "Parou no meio\n" ;
-if( a  ==  II  or  a  ==  IC ) then 
+if( op  ==  I ) then 
 {
-print  "Var a ficou II ou IC\n" ;
-a =  A ;
-;
-;
-}else
-a =  'z' ;
-if( a  ==  IO ) then 
-else
-;
-;
-;
-;
-{
-;
+print sub( a ,  b );
 };
+if( op  ==  H ) then 
 {
+print mul( a ,  b );
 };
+if( op  ==  G ) then 
+{
+print div( a ,  b );
+};
+if( op  ==  F ) then 
+{
+print fat( a );
+};
+print  "\n" ;
+};
+return  O ;
 };

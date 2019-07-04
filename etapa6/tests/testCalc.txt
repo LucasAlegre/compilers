@@ -1,0 +1,55 @@
+int op = O;
+int a = O;
+int b = O;
+int i = O;
+int tmp = O;
+
+int add(int x, int y){
+    return x + y;
+};
+
+int div (int c, int d) {
+    return c / d;
+};
+
+int mul(int e, int f){
+    return e * f;
+};
+
+int sub(int g, int h){
+    return g - h;
+};
+
+int fat(int z){
+    tmp = z;
+    loop( tmp != I){
+        tmp = tmp - I;
+        z = z * tmp;
+    };
+    return z;
+};
+
+int main(){
+    loop(I==I){
+        read a;
+        read b;
+        read op;
+        if (op == O) then {
+            print add(a,b);
+        };
+        if (op == I) then{
+            print sub(a,b);
+        };
+        if (op == H) then {
+            print mul(a,b);
+        };
+        if (op == G) then {
+            print div(a,b);
+        };
+        if (op == F) then {
+            print fat(a);
+        };
+        print "\n";
+    };
+    return O;
+};
