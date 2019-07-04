@@ -1,22 +1,39 @@
-int a =  A ;
-int c =  O ;
-int dosomething(int b){
-print  b ;
+int vec[ A ]:  A   D   H   B   F   G   I   C   E  ;
+int buf =  O ;
+int count =  O ;
+int i =  O ;
+int len =  A ;
+int dumb =  O ;
+int swap(int q, int p){
+buf = vec[ q ];
+vec[ q ] = vec[ p ];
+vec[ p ] =  buf ;
 return  O ;
 };
-int dosomething2(int s, int bc){
-print  s ;
-print  "\n" ;
-print  bc  +  I ;
-print  "\n" ;
+int iterate(int size, int limit){
+count =  O ;
+loop( count  <  size  -  I  -  limit ){
+if(vec[ count ] >= vec[ count  +  I ]) then 
+{
+dumb = swap( count ,  count  +  I );
+};
+count =  count  +  I ;
+};
 return  O ;
+};
+int imprime(int vecsize, int index){
+print vec[ index ];
+if( index  ==  vecsize  -  I ) then 
+return  O ;
+dumb = imprime( vecsize ,  index  +  I );
+return  A ;
 };
 int main(){
-a = dosomething( a );
+loop( i  <  len  -  I ){
+dumb = iterate( len ,  i );
+i =  i  +  I ;
+};
+dumb = imprime( len ,  O );
 print  "\n" ;
-print  a ;
-read c;
-print  "\n" ;
-print dosomething2( a ,  c );
 return  O ;
 };

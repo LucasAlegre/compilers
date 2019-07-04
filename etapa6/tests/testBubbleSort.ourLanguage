@@ -6,8 +6,6 @@ int len = A;
 int dumb = O;
 
 int swap(int q, int p){
-    print q;
-    print "\n";
   buf = vec[q];
 	vec[q] = vec[p];
 	vec[p] = buf;
@@ -26,18 +24,21 @@ int iterate(int size, int limit){
 	return O;
 };
 
+int imprime(int vecsize, int index){
+	print vec[index];
+	if(index == vecsize - I) then
+		 return O;
+	dumb = imprime(vecsize, index + I);
+	
+	return A;
+};
+
 int main(){
 	loop(i < len - I){
 		dumb = iterate(len, i);
 		i = i + I;
 	};
-
-  i = O;
-
-  loop(i < len - I){
-         print vec[i];
-         i = i + I;
-  };
-
+  dumb = imprime(len, O);
+	print "\n";
 	return O;
 };

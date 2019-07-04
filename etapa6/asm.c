@@ -433,7 +433,9 @@ void asmGenerate(tac *firstTac, astree_node* ast){
             break;
 
         case TAC_RET:
-                fprintf(out, "\tmovl	_%s(%%rip), %%eax\n" , tac->res->text);
+                fprintf(out, "\tmovl	_%s(%%rip), %%eax\n"
+											 "\tpopq	%%rbp\n"					
+										"\tret\n", tac->res->text);
                 break;
 
             default:

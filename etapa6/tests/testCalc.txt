@@ -21,12 +21,13 @@ int sub(int g, int h){
 };
 
 int fat(int z){
-    tmp = z;
-    loop( tmp != I){
-        tmp = tmp - I;
-        z = z * tmp;
-    };
-    return z;
+		tmp = z;
+		if(z == I) then return I;
+		loop(z != I){
+			z = z - I;
+			tmp = tmp * z;
+		};
+		return tmp;
 };
 
 int main(){
